@@ -55,7 +55,7 @@ class dynamic_2bitset {
   const uint8_t ones() { return std::numeric_limits<uint8_t>::max(); }
 };
 
-static uint32_t nextpoweroftwo(uint32_t k) {
+static inline uint32_t nextpoweroftwo(uint32_t k) {
   if (k == 0) return 1;
   k--;
   for (uint32_t i=1; i<sizeof(uint32_t)*CHAR_BIT; i<<=1) k = k | k >> i;
