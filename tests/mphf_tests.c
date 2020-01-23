@@ -12,12 +12,6 @@
 #include <assert.h>
 #include <cmph.h>
 
-#ifdef _WIN32
-#define VERSION "0.8"
-#else
-#include "config.h"
-#endif
-
 
 void usage(const char *prg)
 {
@@ -69,7 +63,7 @@ int main(int argc, char **argv)
 				++verbosity;
 				break;
 			case 'V':
-				printf("%s\n", VERSION);
+				printf("%s\n", CMPH_VERSION);
 				return 0;
 			case 'h':
 				usage_long(argv[0]);
