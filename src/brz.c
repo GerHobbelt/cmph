@@ -19,6 +19,10 @@
 //#define DEBUG
 #include "debug.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 static int brz_gen_mphf(cmph_config_t *mph);
 static cmph_uint32 brz_min_index(cmph_uint32 * vector, cmph_uint32 n);
 static void brz_destroy_keys_vd(cmph_uint8 ** keys_vd, cmph_uint32 nkeys);
@@ -44,6 +48,15 @@ brz_config_data_t *brz_config_new(void)
 	brz->tmp_dir = (cmph_uint8 *)calloc((size_t)10, sizeof(cmph_uint8));
 	brz->mphf_fd = NULL;
 	strcpy((char *)(brz->tmp_dir), "/var/tmp/");
+#ifdef _WIN32
+	free(brz->tmp_dir);
+	brz->tmp_dir = (cmph_uint8*)calloc((size_t)MAX_PATH+1, sizeof(cmph_uint8));
+	int ret = GetTempPathA(MAX_PATH, (char*)brz->tmp_dir);
+	assert(ret != 0);
+	size_t len = strlen((char*)brz->tmp_dir);
+	if (len > 0 && brz->tmp_dir[len - 1] == '\\')
+		brz->tmp_dir[len - 1] = '/';
+#endif
 	assert(brz);
 	return brz;
 }
