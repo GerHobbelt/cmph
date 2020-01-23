@@ -1,4 +1,4 @@
-#ifdef WIN32
+#ifdef _WIN32
 #include "wingetopt.h"
 #else
 #include <getopt.h>
@@ -13,7 +13,7 @@
 #include "cmph.h"
 #include "hash.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #define VERSION "0.8"
 #else
 #include "config.h"

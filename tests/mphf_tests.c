@@ -1,4 +1,4 @@
-#ifdef WIN32
+#ifdef _WIN32
 #include "../wingetopt.h"
 #else
 #include <getopt.h>
@@ -12,7 +12,7 @@
 #include <assert.h>
 #include <cmph.h>
 
-#ifdef WIN32
+#ifdef _WIN32
 #define VERSION "0.8"
 #else
 #include "config.h"
