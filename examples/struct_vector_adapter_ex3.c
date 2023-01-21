@@ -1,14 +1,22 @@
 #include <cmph.h>
 #include <string.h>
+
+#include "monolithic_examples.h"
+
 // Create minimal perfect hash function from in-memory vector
 
-#pragma pack(1)
+#pragma pack(push, 1)
 typedef struct {
 	cmph_uint32 id;
 	char key[11];
 	cmph_uint32 year;
 } rec_t;
-#pragma pack(0)
+#pragma pack(pop)
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_struct_veector_adapter_ex3_main
+#endif
 
 int main(int argc, const char **argv)
 {   

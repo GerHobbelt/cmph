@@ -4,7 +4,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#if !defined(_WIN32) && 0
+#define HAVE_GETRUSAGE 1
+#endif
+
+#ifdef HAVE_GETRUSAGE 
 #include <sys/resource.h>
+#else
+#include <plf_nanotimer_c_api.h>
+#endif
 
 #include "cmph_benchmark.h"
 
@@ -12,11 +21,17 @@ typedef struct {
   const char* name;
   void (*func)(int);
   int iters;
+#ifdef HAVE_GETRUSAGE 
   struct rusage begin;
   struct rusage end;
+#else
+  nanotimer_data_t timer;
+#endif
 } benchmark_t;
 
 static benchmark_t* global_benchmarks = NULL;
+
+#ifdef HAVE_GETRUSAGE 
 
 /* Subtract the `struct timeval' values X and Y,
    storing the result in RESULT.
@@ -44,6 +59,8 @@ int timeval_subtract (
   /* Return 1 if result is negative. */
   return x->tv_sec < y->tv_sec;
 }
+
+#endif
 
 benchmark_t* find_benchmark(const char* name) {
   benchmark_t* benchmark = global_benchmarks;
@@ -79,21 +96,30 @@ void bm_register(const char* name, void (*func)(int), int iters) {
 
 void bm_start(const char* name) {
   benchmark_t* benchmark;
-  struct rusage rs;
 
   benchmark = find_benchmark(name);
   assert(benchmark);
-  int ret = getrusage(RUSAGE_SELF, &rs);  
+#ifdef HAVE_GETRUSAGE
+ {
+  struct rusage rs;
+
+  int ret = getrusage(RUSAGE_SELF, &rs);
   if (ret != 0) {
     perror("rusage failed");    
     exit(-1);
   }
   benchmark->begin = rs;
+ }
+#else
+  nanotimer(&benchmark->timer);
+  nanotimer_start(&benchmark->timer);
+#endif
   (*benchmark->func)(benchmark->iters);
 }
 
 void bm_end(const char* name) { 
   benchmark_t* benchmark;
+#ifdef HAVE_GETRUSAGE 
   struct rusage rs;
 
   int ret = getrusage(RUSAGE_SELF, &rs);  
@@ -101,8 +127,10 @@ void bm_end(const char* name) {
     perror("rusage failed");    
     exit(-1);
   }
+#endif
 
   benchmark = find_benchmark(name);
+#ifdef HAVE_GETRUSAGE 
   benchmark->end = rs;
 
   struct timeval utime;
@@ -115,10 +143,16 @@ void bm_end(const char* name) {
          utime.tv_sec, (long int)utime.tv_usec);
   printf("System time used: %ld.%06ld\n",
          stime.tv_sec, (long int)stime.tv_usec);
+#else
+  double t = nanotimer_get_elapsed_ms(&benchmark->timer);
+
+  printf("Benchmark: %s\n", benchmark->name);
+  printf("Time used  : %.6lf\n", t);
+#endif
   printf("\n");
 }
  
-void run_benchmarks(int argc, char** argv) {
+void run_benchmarks(int argc, const char** argv) {
   benchmark_t* benchmark = global_benchmarks;
   while (benchmark && benchmark->name != NULL) {
     bm_start(benchmark->name);

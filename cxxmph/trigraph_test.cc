@@ -2,7 +2,14 @@
 
 #include "trigraph.h"
 
+#include "monolithic_examples.h"
+
 using cxxmph::TriGraph;
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_trigraph_test_main
+#endif
 
 int main(int argc, const char** argv) {
   TriGraph g(4, 2);
@@ -19,4 +26,5 @@ int main(int argc, const char** argv) {
   assert(g.vertex_degree()[3] == 1);
   std::vector<TriGraph::Edge> edges;
   g.ExtractEdgesAndClear(&edges);
+  return EXIT_SUCCESS;
 }

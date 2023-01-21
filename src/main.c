@@ -13,6 +13,8 @@
 #include "cmph.h"
 #include "hash.h"
 
+#include "monolithic_examples.h"
+
 
 static void usage(const char *prg)
 {
@@ -57,6 +59,11 @@ static void usage_long(const char *prg)
 	fprintf(stderr, "    \t range [1,128]. Defaul is 1\n");
 	fprintf(stderr, "  keysfile\t line separated file with keys\n");
 }
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_main
+#endif
 
 int main(int argc, const char **argv)
 {

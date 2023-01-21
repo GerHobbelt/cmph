@@ -2,7 +2,10 @@
 
 #define DEBUG
 #include "../src/debug.h"
+
 #include <stdlib.h>
+
+#include "monolithic_examples.h"
 
 static inline void print_values(compressed_rank_t * cr, cmph_uint32 idx)
 {
@@ -28,6 +31,11 @@ vector[]      = {0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1}
 nzeros = 12
 zeroIndices[] = {0, 1, 2, 5, 7, 9, 11, 12, 13, 16, 17, 18}
 */
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_compressed_rank_tests_main
+#endif
+
 int main(int argc, const char **argv)
 {
 	compressed_rank_t cr;

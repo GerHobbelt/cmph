@@ -3,6 +3,13 @@
 #define DEBUG
 #include "../src/debug.h"
 
+#include "monolithic_examples.h"
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_graph_tests_main
+#endif
+
 int main(int argc, const char **argv)
 {
 	graph_iterator_t it;

@@ -2,7 +2,14 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "monolithic_examples.h"
+
 // Create minimal perfect hash function from in-disk keys using BDZ algorithm
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_file_adapter_ex2_main
+#endif
 
 int main(int argc, const char **argv)
 {   

@@ -3,6 +3,8 @@
 #include <vector>
 #include <iostream>
 
+#include "monolithic_examples.h"
+
 
 using std::cerr;
 using std::endl;
@@ -11,6 +13,11 @@ using std::vector;
 using cxxmph::hollow_iterator_base;
 using cxxmph::make_hollow;
 using cxxmph::is_empty;
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_hollow_iterator_test_main
+#endif
 
 int main(void) {
   vector<int> v;

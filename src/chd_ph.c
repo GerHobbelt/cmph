@@ -903,7 +903,6 @@ void chd_ph_destroy(cmph_t *mphf)
 	hash_state_destroy(data->hl);
 	free(data);
 	free(mphf);
-
 }
 
 cmph_uint32 chd_ph_search(cmph_t *mphf, const char *key, cmph_uint32 keylen)
@@ -950,7 +949,6 @@ void chd_ph_pack(cmph_t *mphf, void *packed_mphf)
 	// packing cs
 	compressed_seq_pack(data->cs, ptr);
 	//ptr += compressed_seq_packed_size(data->cs);
-
 }
 
 cmph_uint32 chd_ph_packed_size(cmph_t *mphf)
@@ -961,7 +959,6 @@ cmph_uint32 chd_ph_packed_size(cmph_t *mphf)
 	register cmph_uint32 cs_pack_size = compressed_seq_packed_size(data->cs);
 
 	return (cmph_uint32)(sizeof(CMPH_ALGO) + hash_state_pack_size + cs_pack_size + 3*sizeof(cmph_uint32));
-
 }
 
 cmph_uint32 chd_ph_search_packed(void *packed_mphf, const char *key, cmph_uint32 keylen)

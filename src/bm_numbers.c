@@ -6,6 +6,8 @@
 #include "cmph_benchmark.h"
 #include "linear_string_map.h"
 
+#include "monolithic_examples.h"
+
 // Generates a vector with random unique 32 bits integers
 cmph_uint32* random_numbers_vector_new(cmph_uint32 size) {
   cmph_uint32 i = 0;
@@ -14,8 +16,8 @@ cmph_uint32* random_numbers_vector_new(cmph_uint32 size) {
   cmph_uint32* vec = (cmph_uint32 *)malloc(sizeof(cmph_uint32)*size);
   memset(dup, 0, dup_bits/8);
   for (i = 0; i < size; ++i) {
-    cmph_uint32 v = random();
-    while (GETBIT(dup, v % dup_bits)) { v = random(); }
+    cmph_uint32 v = rand();
+    while (GETBIT(dup, v % dup_bits)) { v = rand(); }
     SETBIT(dup, v % dup_bits);
     vec[i] = v;
   }
@@ -78,7 +80,7 @@ void bm_search(CMPH_ALGO algo, int iters) {
   cmph_uint32* hash_count = (cmph_uint32*)malloc(sizeof(cmph_uint32)*iters);  
 
   for (i = 0; i < iters * 100; ++i) {
-    cmph_uint32 pos = random() % iters;
+    cmph_uint32 pos = rand() % iters;
     const char* buf = (const char*)(g_numbers + pos);
     cmph_uint32 h = cmph_search(mphf, buf, sizeof(cmph_uint32));
     ++count[pos];
@@ -101,6 +103,11 @@ DECLARE_ALGO(CMPH_CHM);
 DECLARE_ALGO(CMPH_BRZ);
 DECLARE_ALGO(CMPH_FCH);
 DECLARE_ALGO(CMPH_BDZ);
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_bm_numbers_main
+#endif
 
 int main(int argc, const char** argv) {
   g_numbers_len = 1000 * 1000;

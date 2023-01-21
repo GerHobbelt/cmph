@@ -2,7 +2,10 @@
 
 #define DEBUG
 #include "../src/debug.h"
+
 #include <stdlib.h>
+
+#include "monolithic_examples.h"
 
 static inline void print_values(compressed_seq_t * cs, cmph_uint32 idx)
 {
@@ -20,6 +23,11 @@ static inline void print_values_packed(char * cs_packed, cmph_uint32 idx)
 	index = compressed_seq_query_packed(cs_packed, idx);
 	fprintf(stderr, "Index[%u]\t= %u\n", idx, index);
 }
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_compressed_seq_tests_main
+#endif
 
 int main(int argc, const char **argv)
 {

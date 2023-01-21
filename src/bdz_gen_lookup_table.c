@@ -2,11 +2,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void help(char * prname)
+#include "monolithic_examples.h"
+
+static void help(const char * prname)
 {
 	fprintf(stderr, "USE: %s <n><wordsizeinbits>\n", prname);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_bdz_gen_lookup_table_main
+#endif
 
 int main(int argc, const char ** argv)
 {
@@ -31,4 +38,5 @@ int main(int argc, const char ** argv)
 		fprintf(stderr, "%d, ", n_assigned);	
 	} 
 	fprintf(stderr, "\n");
+	return EXIT_SUCCESS;
 }

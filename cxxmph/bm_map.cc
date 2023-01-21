@@ -4,6 +4,8 @@
 #include "bm_common.h"
 #include "mph_map.h"
 
+#include "monolithic_examples.h"
+
 using std::string;
 
 // Another reference benchmark:
@@ -95,6 +97,11 @@ class BM_SearchUint64 : public SearchUint64Benchmark {
 
 using namespace cxxmph;
 
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_bm_map_main
+#endif
+
 int main(int argc, const char** argv) {
   srand(4);
   Benchmark::Register(new BM_CreateUrls<dense_hash_map<StringPiece, StringPiece>>("URLS100k"));
@@ -117,4 +124,5 @@ int main(int argc, const char** argv) {
   Benchmark::Register(new BM_SearchUint64<mph_map<uint64_t, uint64_t>>);
   Benchmark::Register(new BM_SearchUint64<sparse_hash_map<uint64_t, uint64_t>>);
   Benchmark::RunAll();
+  return EXIT_SUCCESS;
 }

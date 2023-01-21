@@ -1,5 +1,5 @@
 #ifdef _WIN32
-#include "../wingetopt.h"
+#include "wingetopt.h"
 #else
 #include <getopt.h>
 #endif
@@ -12,11 +12,14 @@
 #include <assert.h>
 #include <cmph.h>
 
+#include "monolithic_examples.h"
+
 
 static void usage(const char *prg)
 {
 	fprintf(stderr, "usage: %s [-v] [-h] [-V] [-k nkeys] [-m file.mph]  keysfile\n", prg);   
 }
+
 static void usage_long(const char *prg)
 {
 	fprintf(stderr, "usage: %s [-v] [-h] [-V] [-k nkeys] [-m file.mph] keysfile\n", prg);   
@@ -28,6 +31,11 @@ static void usage_long(const char *prg)
 	fprintf(stderr, "  -m\t minimum perfect hash function file \n");
 	fprintf(stderr, "  keysfile\t line separated file with keys\n");
 }
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_mphf_tests_main
+#endif
 
 int main(int argc, const char **argv)
 {

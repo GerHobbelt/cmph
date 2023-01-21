@@ -9,6 +9,8 @@
 #include "stringpiece.h"
 #include "mph_index.h"
 
+#include "monolithic_examples.h"
+
 using namespace cxxmph;
 
 using std::string;
@@ -137,6 +139,11 @@ class BM_STLIndexSearch : public SearchUrlsBenchmark {
   }
   unordered_map<StringPiece, uint32_t> index_;
 };
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_bm_index_main
+#endif
 
 int main(int argc, const char** argv) {
   Benchmark::Register(new BM_MPHIndexCreate("URLS100k"));

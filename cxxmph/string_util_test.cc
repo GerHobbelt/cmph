@@ -1,5 +1,6 @@
 #include "string_util.h"
 #include "test.h"
+#include <check.h>
 
 using namespace cxxmph;
 

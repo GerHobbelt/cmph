@@ -257,12 +257,10 @@ cmph_uint32 chd_packed_size(cmph_t *mphf)
 {
 	register chd_data_t *data = (chd_data_t *)mphf->data;
 	return (cmph_uint32)(sizeof(CMPH_ALGO) + 2*sizeof(cmph_uint32) + data->packed_cr_size + data->packed_chd_phf_size);
-
 }
 
 cmph_uint32 chd_search_packed(void *packed_mphf, const char *key, cmph_uint32 keylen)
 {
-
 	register cmph_uint32 * ptr = (cmph_uint32 *)packed_mphf;
 	register cmph_uint32 packed_cr_size = *ptr++;
 	register cmph_uint8 * packed_chd_phf = ((cmph_uint8 *) ptr) + packed_cr_size + sizeof(cmph_uint32);
