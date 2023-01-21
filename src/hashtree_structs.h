@@ -2,17 +2,21 @@
 #define __CMPH_HASHTREE_STRUCTS_H__
 
 #include "hash_state.h"
+#include "graph.h"
 
 struct __hashtree_data_t
 {
 	cmph_uint32 m; //edges (words) count
 	double c; //constant c
 	cmph_uint8 *size; //size[i] stores the number of edges represented by g[i]
-	cmph_uint32 **g;
+	cmph_uint32 *g;
 	cmph_uint32 k; //number of components
 	hash_state_t **h1; 
 	hash_state_t **h2;
 	hash_state_t *h3;
+
+	hash_state_t **hashes;
+	cmph_uint32 n; //nodes count
 };
 
 struct __hashtree_config_data_t
@@ -27,6 +31,11 @@ struct __hashtree_config_data_t
 	hash_state_t **h1; 
 	hash_state_t **h2;
 	hash_state_t *h3;
+
+	cmph_uint32 n; //nodes count
+	graph_t *graph;
+	hash_state_t **hashes;
+	cmph_uint32 *g;
 };
 
 #endif
