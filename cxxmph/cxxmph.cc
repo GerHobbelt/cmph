@@ -1,7 +1,11 @@
 // Copyright 2010 Google Inc. All Rights Reserved.
 // Author: davi@google.com (Davi Reis)
 
+#ifdef _WIN32
+#include "wingetopt.h"
+#else
 #include <getopt.h>
+#endif
 
 #include <fstream>
 #include <iostream>
@@ -9,7 +13,10 @@
 #include <vector>
 
 #include "mph_map.h"
-#include "config.h"
+#include "cmph.h"
+//#include "config.h"
+
+#include "monolithic_examples.h"
 
 using std::cerr;
 using std::cout;
@@ -31,6 +38,11 @@ static void usage_long(const char* prg) {
   cerr << "   -v\t increase verbosity (may be used multiple times)" << endl;
 }
 
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_cxxcmph_main
+#endif
+
 int main(int argc, const char** argv) {
 
   int verbosity = 0;
@@ -51,13 +63,13 @@ int main(int argc, const char** argv) {
   }
   if (optind != argc - 1) {
     usage(argv[0]);
-    return 1;
+    return EXIT_FAILURE;
   }
   vector<string> keys;
   ifstream f(argv[optind]);
   if (!f.is_open()) {
     std::cerr << "Failed to open " << argv[optind] << std::endl;
-    exit(-1);
+	return EXIT_FAILURE;
   }
   string buffer;
   while (!getline(f, buffer).eof()) keys.push_back(buffer);
@@ -71,4 +83,5 @@ int main(int argc, const char** argv) {
     cout << i << ": " << it->first
          <<" -> " << it->second << endl;
   }
+  return EXIT_SUCCESS;
 }
