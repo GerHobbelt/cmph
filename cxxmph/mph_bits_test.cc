@@ -63,7 +63,22 @@ int main(int argc, const char** argv) {
   empty.swap(large);
 
   if (nextpoweroftwo(3) != 4) return EXIT_FAILURE;
+  
+  if (nextpoweroftwo(3) != 4) return EXIT_FAILURE;
+  uint32_t de_bruijn32 = 0x4653adf;
+  for (int i = 0; i < 32; ++i) {
+    uint32_t b = 1 << i;
+    // b &= -b;
+    b *= de_bruijn32;
+    b >>= 27;  // 32 - log(32)
+  }
+  uint64_t de_bruijn64 = 0x218a392cd3d5dbfULL;
+  for (int i = 0; i < 64; ++i) {
+    uint64_t b = 1ULL << i;
+    // b &= -b;
+    b *= de_bruijn64;
+    b >>= 64-6;  // 64 - log(64)
+  }
+
   return EXIT_SUCCESS;
 }
-  
-  

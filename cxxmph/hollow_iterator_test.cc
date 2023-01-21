@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <vector>
 #include <iostream>
+#include <utility>
 
 #include "monolithic_examples.h"
 
@@ -9,10 +10,12 @@
 using std::cerr;
 using std::endl;
 using std::vector;
+using std::pair;
+using std::make_pair;
+
 #include "hollow_iterator.h"
-using cxxmph::hollow_iterator_base;
-using cxxmph::make_hollow;
-using cxxmph::is_empty;
+
+using namespace cxxmph;
 
 
 #if defined(BUILD_MONOLITHIC)
@@ -52,5 +55,14 @@ int main(void) {
   hollow_iterator_base<vector<int>::iterator, iev> default_constructed;
   default_constructed = make_hollow(&v, &p, v.begin());
   return 0;
+  
+  vector<pair<int, pair<int, int>>> vp;
+  vp.push_back(make_pair(5,make_pair(0, 1)));
+  auto pbegin = make_iterator_second(make_hollow(&vp, &p, vp.begin()));
+  auto pend = make_iterator_second(make_hollow(&vp, &p, vp.end()));
+  if (pbegin->second != pbegin->first + 1) exit(-1);
+  while (pbegin != pend) ++pbegin;
+  
+
 }
 

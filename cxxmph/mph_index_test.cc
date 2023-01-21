@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -7,6 +8,8 @@
 
 #include "monolithic_examples.h"
 
+using std::cerr;
+using std::endl;
 using std::string;
 using std::vector;
 using namespace cxxmph;
