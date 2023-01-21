@@ -102,7 +102,7 @@ DECLARE_ALGO(CMPH_BRZ);
 DECLARE_ALGO(CMPH_FCH);
 DECLARE_ALGO(CMPH_BDZ);
 
-int main(int argc, char** argv) {
+int main(int argc, const char** argv) {
   g_numbers_len = 1000 * 1000;
   g_numbers = random_numbers_vector_new(g_numbers_len);
   g_created_mphf = lsmap_new();

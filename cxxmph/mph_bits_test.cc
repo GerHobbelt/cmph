@@ -6,7 +6,7 @@
 using cxxmph::dynamic_2bitset;
 using cxxmph::nextpoweroftwo;
 
-int main(int argc, char** argv) {
+int main(int argc, const char** argv) {
   dynamic_2bitset small(256, true);
   for (uint32_t i = 0; i < small.size(); ++i) small.set(i, i % 4);
   for (uint32_t i = 0; i < small.size(); ++i) {

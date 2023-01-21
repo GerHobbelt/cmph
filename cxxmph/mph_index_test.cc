@@ -9,7 +9,7 @@ using std::string;
 using std::vector;
 using namespace cxxmph;
 
-int main(int argc, char** argv) {
+int main(int argc, const char** argv) {
 
   srand(1);
   vector<string> keys;

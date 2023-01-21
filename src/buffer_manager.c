@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
+
 struct __buffer_manager_t
 {
 	cmph_uint32 memory_avail;         // memory available

@@ -10,7 +10,7 @@ using std::string;
 using std::unordered_map;
 using namespace cxxmph;
 
-int main(int argc, char** argv) {
+int main(int argc, const char** argv) {
   auto hasher = seeded_hash_function<Murmur3StringPiece>();
   string key1("0");
   string key2("1");

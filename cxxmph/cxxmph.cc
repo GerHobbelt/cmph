@@ -21,17 +21,17 @@ using std::vector;
 
 using cxxmph::mph_map;
 
-void usage(const char* prg) {
+static void usage(const char* prg) {
   cerr << "usage: " << prg << " [-v] [-h] [-V] <keys.txt>" << endl;
 }
-void usage_long(const char* prg) {
+static void usage_long(const char* prg) {
   usage(prg);
   cerr << "   -h\t print this help message" << endl;
   cerr << "   -V\t print version number and exit" << endl;
   cerr << "   -v\t increase verbosity (may be used multiple times)" << endl;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, const char** argv) {
 
   int verbosity = 0;
   while (1) {

@@ -4,7 +4,7 @@
 
 using cxxmph::TriGraph;
 
-int main(int argc, char** argv) {
+int main(int argc, const char** argv) {
   TriGraph g(4, 2);
   g.AddEdge(TriGraph::Edge(0, 1, 2));
   g.AddEdge(TriGraph::Edge(1, 3, 2));

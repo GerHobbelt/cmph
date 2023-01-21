@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-void help(char * prname)
+
+static void help(char * prname)
 {
 	fprintf(stderr, "USE: %s <n><wordsizeinbits>\n", prname);
 	exit(1);
 }
 
-int main(int argc, char ** argv)
+int main(int argc, const char ** argv)
 {
 	if(argc != 3) help(argv[0]);
 	int n = atoi(argv[1]);

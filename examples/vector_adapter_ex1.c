@@ -1,9 +1,9 @@
 #include <cmph.h>
 #include <string.h>
-// Create minimal perfect hash function from in-memory vector
-int main(int argc, char **argv)
-{ 
 
+// Create minimal perfect hash function from in-memory vector
+int main(int argc, const char **argv)
+{ 
     // Creating a filled vector
     unsigned int i = 0;
     const char *vector[] = {"aaaaaaaaaa", "bbbbbbbbbb", "cccccccccc", "dddddddddd", "eeeeeeeeee", 

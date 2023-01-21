@@ -3,7 +3,7 @@
 #define DEBUG
 #include "../src/debug.h"
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	graph_iterator_t it;
 	cmph_uint32 i, neighbor;

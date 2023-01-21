@@ -57,7 +57,7 @@ static inline void print_values_packed(char * sel_packed)
 	fprintf(stderr, "Index[3]\t= %u\n", index - 3);
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	select_t sel;
 	cmph_uint32 n = 4;

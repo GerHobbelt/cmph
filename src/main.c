@@ -14,11 +14,11 @@
 #include "hash.h"
 
 
-void usage(const char *prg)
+static void usage(const char *prg)
 {
 	fprintf(stderr, "usage: %s [-v] [-h] [-V] [-k nkeys] [-f hash_function] [-g [-c algorithm_dependent_value][-s seed] ] [-a algorithm] [-M memory_in_MB] [-b algorithm_dependent_value] [-t keys_per_bin] [-d tmp_dir] [-m file.mph]  keysfile\n", prg);
 }
-void usage_long(const char *prg)
+static void usage_long(const char *prg)
 {
 	cmph_uint32 i;
 	fprintf(stderr, "usage: %s [-v] [-h] [-V] [-k nkeys] [-f hash_function] [-g [-c algorithm_dependent_value][-s seed] ] [-a algorithm] [-M memory_in_MB] [-b algorithm_dependent_value] [-t keys_per_bin] [-d tmp_dir] [-m file.mph] keysfile\n", prg);
@@ -58,7 +58,7 @@ void usage_long(const char *prg)
 	fprintf(stderr, "  keysfile\t line separated file with keys\n");
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	cmph_uint32 verbosity = 0;
 	char generate = 0;

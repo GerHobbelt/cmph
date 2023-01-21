@@ -95,8 +95,8 @@ class BM_SearchUint64 : public SearchUint64Benchmark {
 
 using namespace cxxmph;
 
-int main(int argc, char** argv) {
-  srandom(4);
+int main(int argc, const char** argv) {
+  srand(4);
   Benchmark::Register(new BM_CreateUrls<dense_hash_map<StringPiece, StringPiece>>("URLS100k"));
   Benchmark::Register(new BM_CreateUrls<std::unordered_map<StringPiece, StringPiece>>("URLS100k"));
   Benchmark::Register(new BM_CreateUrls<mph_map<StringPiece, StringPiece>>("URLS100k"));

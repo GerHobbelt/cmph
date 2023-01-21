@@ -4,8 +4,17 @@
 #include <cstring>
 #include <cstdio>
 #include <memory>
+
+#if !defined(_WIN32) && 0
+#define HAVE_GETRUSAGE 1
+#endif
+
+#ifdef HAVE_GETRUSAGE 
 #include <sys/time.h>
 #include <sys/resource.h>
+#else
+#include <plf_nanotimer.hpp>
+#endif
 
 #include <iomanip>
 #include <iostream>
@@ -22,6 +31,8 @@ using std::ostringstream;
 using std::vector;
 
 namespace {
+
+#ifdef HAVE_GETRUSAGE 
 
 /* Subtract the `struct timeval' values X and Y,
    storing the result in RESULT.
@@ -77,6 +88,8 @@ struct timeval gettimeofday_or_die() {
   return tv;
 }
 
+#endif
+
 #ifdef HAVE_CXA_DEMANGLE
 string demangle(const string& name) {
   char buf[1024];
@@ -107,7 +120,7 @@ namespace cxxmph {
 
 /* static */ void Benchmark::RunAll() {
   for (uint32_t i = 0; i < g_benchmarks.size(); ++i) {
-    std::auto_ptr<Benchmark> bm(g_benchmarks[i]);
+    std::unique_ptr<Benchmark> bm(g_benchmarks[i]);
     if (!bm->SetUp()) {
       cerr << "Set up phase for benchmark "
            << bm->name() << " failed." << endl;
@@ -119,9 +132,15 @@ namespace cxxmph {
 }
 
 void Benchmark::MeasureRun() {
+#ifdef HAVE_GETRUSAGE 
   struct timeval walltime_begin = gettimeofday_or_die();
   struct rusage begin = getrusage_or_die();
+#else
+  plf::nanotimer t;
+  t.start();
+#endif
   Run();
+#ifdef HAVE_GETRUSAGE 
   struct rusage end = getrusage_or_die();
   struct timeval walltime_end = gettimeofday_or_die();
 
@@ -131,11 +150,18 @@ void Benchmark::MeasureRun() {
   timeval_subtract(&stime, &end.ru_stime, &begin.ru_stime);
   struct timeval wtime;
   timeval_subtract(&wtime, &walltime_end, &walltime_begin);
+#else
+  double wtime = t.get_elapsed_ms();
+#endif
 
   cout << "Benchmark: " << name_ << endl;
+#ifdef HAVE_GETRUSAGE 
   cout << "CPU User time  : " << timeval_to_string(utime) << endl;
   cout << "CPU System time: " << timeval_to_string(stime) << endl;
   cout << "Wall clock time: " << timeval_to_string(wtime) << endl;
+#else
+  cout << "Wall clock time: " << wtime << " milliseconds." << endl;
+#endif
   cout << endl;
 }
 

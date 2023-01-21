@@ -73,7 +73,7 @@
 #include <string.h>                 /* for strchr() */ 
 
 /* static (global) variables that are specified as exported by getopt() */ 
-extern char *optarg;    /* pointer to the start of the option argument  */ 
+extern const char *optarg;    /* pointer to the start of the option argument  */ 
 extern int   optind;       /* number of the next argv[] to be evaluated    */ 
 extern int   opterr;       /* non-zero if a question mark should be returned 
                            when a non-valid option character is detected */ 
@@ -81,13 +81,12 @@ extern int   opterr;       /* non-zero if a question mark should be returned
 /* handle possible future character set concerns by putting this in a macro */ 
 #define _next_char(string)  (char)(*(string+1)) 
  
-int getopt(int argc, char *argv[], char *opstring) 
+int getopt(int argc, const char **argv, const char *opstring) 
 { 
-    static char *pIndexPosition = NULL; /* place inside current argv string */ 
-    char *pArgString = NULL;        /* where to start from next */ 
-    char *pOptString;               /* the string in our program */ 
- 
- 
+    static const char *pIndexPosition = NULL; /* place inside current argv string */ 
+    const char *pArgString = NULL;        /* where to start from next */ 
+    const char *pOptString;               /* the string in our program */ 
+  
     if (pIndexPosition != NULL) { 
         /* we last left off inside an argv string */ 
         if (*(++pIndexPosition)) { 

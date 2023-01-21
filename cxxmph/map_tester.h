@@ -8,7 +8,7 @@
 #include <unordered_map>
 
 #include "string_util.h"
-#include <check.h>
+//#include <check.h>
 
 namespace cxxmph {
 

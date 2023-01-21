@@ -138,7 +138,7 @@ class BM_STLIndexSearch : public SearchUrlsBenchmark {
   unordered_map<StringPiece, uint32_t> index_;
 };
 
-int main(int argc, char** argv) {
+int main(int argc, const char** argv) {
   Benchmark::Register(new BM_MPHIndexCreate("URLS100k"));
   Benchmark::Register(new BM_STLIndexCreate("URLS100k"));
   Benchmark::Register(new BM_MPHIndexSearch("URLS100k", 10*1000*1000));

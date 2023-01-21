@@ -13,11 +13,11 @@
 #include <cmph.h>
 
 
-void usage(const char *prg)
+static void usage(const char *prg)
 {
 	fprintf(stderr, "usage: %s [-v] [-h] [-V] [-k nkeys] [-m file.mph]  keysfile\n", prg);   
 }
-void usage_long(const char *prg)
+static void usage_long(const char *prg)
 {
 	fprintf(stderr, "usage: %s [-v] [-h] [-V] [-k nkeys] [-m file.mph] keysfile\n", prg);   
 	fprintf(stderr, "Packed MPHFs testing tool\n\n"); 
@@ -29,7 +29,7 @@ void usage_long(const char *prg)
 	fprintf(stderr, "  keysfile\t line separated file with keys\n");
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	char verbosity = 0;
 	char *mphf_file = NULL;

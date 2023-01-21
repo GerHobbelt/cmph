@@ -6,6 +6,7 @@
 #include"bitbool.h"
 // #define DEBUG
 #include"debug.h"
+
 static inline cmph_uint32 compressed_rank_i_log2(cmph_uint32 x)
 {
 	register cmph_uint32 res = 0;

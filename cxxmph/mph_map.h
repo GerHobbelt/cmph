@@ -37,6 +37,10 @@
 #include "mph_index.h"
 #include "seeded_hash.h"
 
+#if !defined(__GNUC__)
+#define __builtin_expect(x, v)	(x)
+#endif
+
 namespace cxxmph {
 
 using std::pair;

@@ -146,7 +146,7 @@ bool MPHIndex::Reset(
   std::vector<uint32_t> queue;
   while (1) {
     // cerr << "Iterations missing: " << iterations << endl;
-    for (int i = 0; i < 3; ++i) hash_seed_[i] = random();
+    for (int i = 0; i < 3; ++i) hash_seed_[i] = rand();
     if (Mapping<SeededHashFcn>(begin, end, &edges, &queue)) break;
     else --iterations;
     if (iterations == 0) break;

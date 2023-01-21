@@ -21,7 +21,7 @@ static inline void print_values_packed(char * cs_packed, cmph_uint32 idx)
 	fprintf(stderr, "Index[%u]\t= %u\n", idx, index);
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	compressed_seq_t cs;
 	cmph_uint32 i = 0;
