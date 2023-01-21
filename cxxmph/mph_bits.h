@@ -80,7 +80,7 @@ static uint32_t nextpoweroftwo(uint32_t k) {
 
 // From sux-0.7
 static uint8_t rank64(uint64_t x) {
-  register uint64_t byte_sums = x - ( ( x & 0xa * ONES_STEP_4 ) >> 1 );
+  uint64_t byte_sums = x - ( ( x & 0xa * ONES_STEP_4 ) >> 1 );
   byte_sums = ( byte_sums & 3 * ONES_STEP_4 ) + ( ( byte_sums >> 2 ) & 3 * ONES_STEP_4 );
   byte_sums = ( byte_sums + ( byte_sums >> 4 ) ) & 0x0f * ONES_STEP_8;
   return byte_sums * ONES_STEP_8 >> 56;
@@ -103,7 +103,7 @@ static uint64_t select64(uint64_t x, uint8_t k) {
   #endif
 
   // Phase 1: sums by byte
-  register uint64_t byte_sums = x - ( ( x & 0xa * ONES_STEP_4 ) >> 1 );
+  uint64_t byte_sums = x - ( ( x & 0xa * ONES_STEP_4 ) >> 1 );
   byte_sums = ( byte_sums & 3 * ONES_STEP_4 ) + ( ( byte_sums >> 2 ) & 3 * ONES_STEP_4 );
   byte_sums = ( byte_sums + ( byte_sums >> 4 ) ) & 0x0f * ONES_STEP_8;
   byte_sums *= ONES_STEP_8;
