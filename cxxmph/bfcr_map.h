@@ -162,7 +162,7 @@ BFCR_MAP_INLINE_METHOD_DECL(const_iterator, begin)() const { return make_hollow(
 BFCR_MAP_INLINE_METHOD_DECL(const_iterator, end)() const { return make_solid(values_.end()); }
 
 BFCR_MAP_TMPL_SPEC BFCR_MAP_CLASS_SPEC::bfcr_map()
-    : n_(0), m_(8), seed_(random()), values_(m_+48), is_empty_(&values_) {
+    : n_(0), m_(8), seed_(rand()), values_(m_+48), is_empty_(&values_) {
 }
 
 BFCR_MAP_METHOD_DECL(my_int32_t, find_insert_index)(
@@ -204,7 +204,7 @@ BFCR_MAP_METHOD_DECL(my_uint64_t, create_mph)(
   while (iterations--) {
     bool success = true;
     mph = 0;
-    setseed(&mph, random() & 63);
+    setseed(&mph, rand() & 63);
     setpresent(&mph, present(pos->first));
     vector<bool> used_rank(8);
     for (uint32_t i = 0; i < hash.size(); ++i) {
@@ -283,7 +283,7 @@ BFCR_MAP_METHOD_DECL(bool_type, pack)(bool minimal) {
     // cerr << "Trying pack iteration " << iterations << endl;
     vector<indexed_value_type>(m_ + 48).swap(new_values);
     bool success = true; 
-    seed_ = random();
+    seed_ = rand();
     for (auto it = values_.begin(); it != values_.end(); ++it) {
       if (!present(it->first)) continue;
       auto insert_index = find_insert_index(it->second, new_values);
