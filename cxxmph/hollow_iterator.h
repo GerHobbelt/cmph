@@ -31,6 +31,9 @@ struct hollow_iterator_base
   typedef self_type& self_reference;
   typedef typename iterator::reference reference;
   typedef typename iterator::pointer pointer;
+  typedef typename iterator::value_type value_type;
+  typedef typename iterator::difference_type difference_type;
+  typedef typename iterator::iterator_category iterator_category;
   inline hollow_iterator_base() : it_(), empty_() { }
   inline hollow_iterator_base(iterator it, is_empty empty, bool solid) : it_(it), empty_(empty) {
     if (!solid) advance();
