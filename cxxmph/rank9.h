@@ -31,7 +31,7 @@ private:
 
 	/** Counts the number of bits in x. */
 	__inline static int count( const uint64_t x ) {
-		register uint64_t byte_sums = x - ( ( x & 0xa * ONES_STEP_4 ) >> 1 );
+		uint64_t byte_sums = x - ( ( x & 0xa * ONES_STEP_4 ) >> 1 );
 		byte_sums = ( byte_sums & 3 * ONES_STEP_4 ) + ( ( byte_sums >> 2 ) & 3 * ONES_STEP_4 );
 		byte_sums = ( byte_sums + ( byte_sums >> 4 ) ) & 0x0f * ONES_STEP_8;
 		return byte_sums * ONES_STEP_8 >> 56;
