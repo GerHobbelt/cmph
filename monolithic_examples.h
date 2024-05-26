@@ -26,7 +26,7 @@ int cmph_packed_mphf_tests_main(int argc, const char **argv);
 int cmph_seeded_has_test_main(int argc, const char **argv);
 int cmph_select_tests_main(int argc, const char **argv);
 int cmph_small_set_ex4_main(void);
-int cmph_struct_veector_adapter_ex3_main(int argc, const char **argv);
+int cmph_struct_vector_adapter_ex3_main(int argc, const char **argv);
 int cmph_test_main(void);
 int cmph_trigraph_test_main(int argc, const char **argv);
 int cmph_vector_adapter_ex1_main(int argc, const char **argv);
