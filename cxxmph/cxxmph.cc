@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
         usage_long(argv[0]);
         return 0;
       case 'V':
-        std::cout << VERSION << std::endl;
+        std::cout << CMPH_VERSION << std::endl;
         return 0;
       case 'v':
         ++verbosity;

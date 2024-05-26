@@ -1,4 +1,4 @@
-#ifdef WIN32
+#ifdef _WIN32
 #include "../wingetopt.h"
 #else
 #include <getopt.h>
@@ -10,14 +10,8 @@
 #include <time.h>
 #include <limits.h>
 #include <assert.h>
-#include <cmph.h>
+#include "cmph.h"
 //#include "hash.h"
-
-#ifdef WIN32
-#define VERSION "0.8"
-#else
-#include "config.h"
-#endif
 
 
 void usage(const char *prg)
@@ -84,7 +78,7 @@ int main(int argc, char **argv)
 				}
 				break;
 			case 'V':
-				printf("%s\n", VERSION);
+				printf("%s\n", CMPH_VERSION);
 				return 0;
 			case 'h':
 				usage_long(argv[0]);

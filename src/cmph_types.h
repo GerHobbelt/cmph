@@ -1,6 +1,8 @@
 #ifndef __CMPH_TYPES_H__
 #define __CMPH_TYPES_H__
 
+#include <stdint.h>
+
 typedef char cmph_int8;
 typedef unsigned char cmph_uint8;
 
@@ -10,29 +12,18 @@ typedef unsigned short cmph_uint16;
 typedef int cmph_int32;
 typedef unsigned int cmph_uint32;
 
-#if defined(__ia64) || defined(__x86_64__)
-  /** \typedef long cmph_int64;
-   *  \brief 64-bit integer for a 64-bit achitecture.
+  /** \typedef int64_t cmph_int64;
+   *  \brief 64-bit integer for a 64-bit architecture.
    */
-  typedef long cmph_int64;
+  typedef int64_t cmph_int64;
 
-  /** \typedef unsigned long cmph_uint64;
-   *  \brief Unsigned 64-bit integer for a 64-bit achitecture.
+  /** \typedef uint64_t cmph_uint64;
+   *  \brief Unsigned 64-bit integer for a 64-bit architecture.
    */
-  typedef unsigned long cmph_uint64;
-#else
-  /** \typedef long long cmph_int64;
-   *  \brief 64-bit integer for a 32-bit achitecture.
-   */
-  typedef long long cmph_int64;
+  typedef uint64_t cmph_uint64;
 
-  /** \typedef unsigned long long cmph_uint64;
-   *  \brief Unsigned 64-bit integer for a 32-bit achitecture.
-   */
-  typedef unsigned long long cmph_uint64;
-#endif
-
-typedef enum { CMPH_HASH_JENKINS, CMPH_HASH_COUNT } CMPH_HASH;
+typedef enum { CMPH_HASH_JENKINS, CMPH_HASH_DJB2, CMPH_HASH_SDBM,
+               CMPH_HASH_FNV, CMPH_HASH_COUNT } CMPH_HASH;
 extern const char *cmph_hash_names[];
 typedef enum { CMPH_BMZ, CMPH_BMZ8, CMPH_CHM, CMPH_BRZ, CMPH_FCH,
                CMPH_BDZ, CMPH_BDZ_PH,

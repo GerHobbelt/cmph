@@ -2,7 +2,7 @@
 extern "C" {
 #endif
 
-#ifndef WIN32
+#ifndef _WIN32
 	#include <getopt.h>
 #else
 	#ifndef _GETOPT_
@@ -17,7 +17,7 @@ extern "C" {
 
 	int getopt(int argc, char *argv[], char *opstring); 
 	#endif //_GETOPT_
-#endif //WIN32
+#endif //_WIN32
 
 #ifdef __cplusplus
 }

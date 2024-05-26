@@ -1,4 +1,4 @@
-#ifdef WIN32
+#ifdef _WIN32
 /***************************************************************************** 
  * 
  *  MODULE NAME : GETOPT.C 
@@ -176,4 +176,4 @@ int getopt(int argc, char *argv[], char *opstring)
     } 
 } 
 
-#endif //WIN32
+#endif //_WIN32

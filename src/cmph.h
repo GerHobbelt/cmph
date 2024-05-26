@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define CMPH_VERSION "2.0.2"
+
 #ifdef __cplusplus
 extern "C"
 {

@@ -4,7 +4,7 @@
 djb2_state_t *djb2_state_new()
 {
 	djb2_state_t *state = (djb2_state_t *)malloc(sizeof(djb2_state_t));
-        if (!djb2_state) return NULL;
+        if (!state) return NULL;
 	state->hashfunc = CMPH_HASH_DJB2;
 	return state;
 }
