@@ -13,6 +13,7 @@
 #include "debruijn_index.h"
 #include "seeded_hash.h"
 #include "hollow_iterator.h"
+#include "compiler.h"
 
 namespace cxxmph {
 
@@ -265,7 +266,7 @@ PC_MAP_METHOD_DECL(iterator, find)(const key_type& k) {
   auto b = h & (index_.size() - 2);
   auto pos = (b<<3) + index_[b].index(h);
   // cerr << "Looking for key " << k << " at bucket " << b << " pos " << pos << endl;
-  if (__builtin_expect(present_[pos], true)) { 
+  if (CMPH_LIKELY(present_[pos])) {
     auto vit = values_.begin() + pos;
     if (equal_(k, vit->first)) return make_iterator(vit);
   }
@@ -275,13 +276,13 @@ PC_MAP_METHOD_DECL(iterator, find)(const key_type& k) {
 PC_MAP_INLINE_METHOD_DECL(const_iterator, find)(const key_type& k) const {
   auto h = hasher_(k, seed_);
   auto b = h & (index_.size() - 2);
-  __builtin_prefetch(&(*(values_.begin() + (b<<3))));
+	CMPH_PREFETCH_L1(&(*(values_.begin() + (b<<3))));
   auto pos = (b<<3) + index_[b].index(h);
   // cerr << "Looking for key " << k << " at bucket " << b << " pos " << pos << endl;
-  // if (__builtin_expect(present_[pos], true)) { 
+  // if (CMPH_LIKELY(present_[pos])) { 
   auto vit = values_.begin() + pos;
   return make_iterator(vit);
-  // if (__builtin_expect(equal_(k, vit->first), true)) return make_iterator(vit);
+  // if (CMPH_LIKELY(equal_(k, vit->first))) return make_iterator(vit);
   return end();
 }
 

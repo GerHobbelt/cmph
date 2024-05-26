@@ -65,14 +65,14 @@ int main(int argc, char** argv) {
        if (key < num_valid && it->second != key) exit(-1);
     }
   }
-  fprintf(stderr, "Size is %lu\n", h.size());
+  fprintf(stderr, "Size is %lu\n", (unsigned long)h.size());
   for (int i = 0; i < num_valid; ++i) {
      char buf[10];    
      snprintf(buf, 10, "%ld", i);
      h.erase(buf);
   }
   if (h.size() != 1) {
-    fprintf(stderr, "Erase failed: size is %lu\n", h.size());
+    fprintf(stderr, "Erase failed: size is %lu\n", (unsigned long)h.size());
     exit(-1);
   }
 }

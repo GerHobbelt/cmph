@@ -15,6 +15,7 @@
 #include "mph_bits.h"
 #include "seeded_hash.h"
 #include "hollow_iterator.h"
+#include "compiler.h"
 
 namespace cxxmph {
 
@@ -128,7 +129,7 @@ class bfcr_map {
     return mph >> 48;
   }
   void setseed(uint64_t* mph, uint16_t seed) const {
-    assert(present(*mph) == (seed & (1ULL << 63)));
+    assert(present(*mph) == (bool)(seed & (1ULL << 63)));
     *mph &= ones() >> 16;
     *mph |= static_cast<uint64_t>(seed) << 48;
   }
@@ -195,7 +196,7 @@ BFCR_MAP_METHOD_DECL(my_uint64_t, create_mph)(
     hash.push_back(h);
     offset.push_back(it - pos);
   }
-  assert(hash.size());
+  assert(hash.size() != 0);
   // cerr << "Finding injection for " << hash.size() << " keys " << endl;
 
   // Just need to guarantee order
@@ -314,9 +315,9 @@ BFCR_MAP_METHOD_DECL(bool_type, pack)(bool minimal) {
 BFCR_MAP_METHOD_DECL(iterator, find)(const key_type& k) {
   auto vit = values_.begin() + index(k);
   // cerr << "index: " << vit - values_.begin() << endl;
-  if (__builtin_expect(present(vit->first), true)) { 
+  if (CMPH_LIKELY(present(vit->first))) {
     // cerr << "value is present " << endl;
-    if (__builtin_expect(equal_(k, vit->second.first), true)) {
+    if (CMPH_LIKELY(equal_(k, vit->second.first))) {
     // cerr << "value is equal " << endl;
       return this->make_solid((vit));
     }
@@ -328,7 +329,7 @@ BFCR_MAP_METHOD_DECL(iterator, find)(const key_type& k) {
 
 BFCR_MAP_INLINE_METHOD_DECL(const_iterator, find)(const key_type& k) const {
   auto vit = values_.begin() + index(k);
-  if (__builtin_expect((vit->first >= 0 && vit->second.first ==k), true)) return make_solid(vit);
+  if (CMPH_LIKELY((vit->first >= 0 && vit->second.first ==k))) return make_solid(vit);
   return end();
 }
 
@@ -336,7 +337,7 @@ BFCR_MAP_INLINE_METHOD_DECL(my_int32_t, index)(const key_type& k) const {
   auto h = hasher_.hash128(k, seed_);
   auto pos = h[0] & (m_-1);
   auto it = values_.begin() + pos;
-  __builtin_prefetch(&(it->second.first));
+	CMPH_PREFETCH_L1(&(it->second.first));
   auto index = reseed(h, seed(it->first)) & 7;
   auto offset = (it->first >> (index << 3)) & 255;
   // cerr << "Key " << k << " is at pos " << pos << " offset " << offset << endl;

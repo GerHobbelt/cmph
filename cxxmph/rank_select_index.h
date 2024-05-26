@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <vector>
+#include <utility>
 
 #include "mph_bits.h"
 
@@ -45,7 +46,7 @@ class rank_select_index {
     return true;
   }
   bool reset(const std::vector<uint32_t>& keys, std::vector<uint32_t>& slots,
-             std::vector<pair<uint32_t, uint32_t>>* out) {
+             std::vector<std::pair<uint32_t, uint32_t>>* out) {
     // fprintf(stderr, "Resetting for %d keys and m %d\n", hashes.size(), m_);
     uint8_t iterations = 255;
     while (iterations--) {

@@ -393,7 +393,6 @@ static void bmz_traverse(bmz_config_data_t *bmz, cmph_uint8 * used_edges, cmph_u
 
 static void bmz_traverse_non_critical_nodes(bmz_config_data_t *bmz, cmph_uint8 * used_edges, cmph_uint8 * visited)
 {
-
 	cmph_uint32 i, v1, v2, unused_edge_index = 0;
 	DEBUGP("Labelling non critical vertices\n");
 	for(i = 0; i < bmz->m; i++)
@@ -558,7 +557,6 @@ void bmz_destroy(cmph_t *mphf)
  */
 void bmz_pack(cmph_t *mphf, void *packed_mphf)
 {
-
 	bmz_data_t *data = (bmz_data_t *)mphf->data;
 	cmph_uint8 * ptr = (cmph_uint8 *)packed_mphf;
 
