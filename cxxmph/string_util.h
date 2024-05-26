@@ -123,7 +123,7 @@ struct variadic_print {
     stream_printf(fancy_format, 0, out_, file_, line_, std::forward<Args>(args)...);
   }
   const std::string& file_;
-  const uint32_t& line_;
+  const uint32_t line_;
   std::ostream* out_;
   const std::string& format_line_;
 };
