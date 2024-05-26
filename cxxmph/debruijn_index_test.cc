@@ -8,8 +8,8 @@ using cxxmph::debruijn_index;
 using cxxmph::reseed32;
 
 int main(int argc, char** argv) {
-  srandom(8);
-  uint32_t seed = random();
+  srand(8);
+  uint32_t seed = rand();
   debruijn_index ri(16);
   if (!ri.insert(reseed32(8, seed), 4)) {
     fprintf(stderr, "Insertion failed\n");
