@@ -36,10 +36,7 @@
 #include "mph_bits.h"
 #include "mph_index.h"
 #include "seeded_hash.h"
-
-#if !defined(__GNUC__)
-#define __builtin_expect(x, v)	(x)
-#endif
+#include "compiler.h"
 
 namespace cxxmph {
 
@@ -228,13 +225,13 @@ MPH_MAP_INLINE_METHOD_DECL(iterator, find)(const key_type& k) {
 }
 
 MPH_MAP_INLINE_METHOD_DECL(my_int32_t, index)(const key_type& k) const {
-  if (__builtin_expect(!slack_.empty(), 0)) {
+  if (CMPH_UNLIKELY(!slack_.empty())) {
      auto sit = slack_.find(hasher128_.hash128(k, 0));
      if (sit != slack_.end()) return sit->second;
   }
-  if (__builtin_expect(index_.size(), 1)) {
+  if (CMPH_LIKELY(index_.size())) {
     auto id = index_.index(k);
-    if (__builtin_expect(present_[id], true)) return id;
+    if (CMPH_LIKELY(present_[id])) return id;
   }
   return -1;
 }

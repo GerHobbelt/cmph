@@ -15,7 +15,7 @@ typedef struct {
 
 
 #if defined(BUILD_MONOLITHIC)
-#define main		cmph_struct_veector_adapter_ex3_main
+#define main		cmph_struct_vector_adapter_ex3_main
 #endif
 
 int main(int argc, const char **argv)

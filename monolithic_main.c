@@ -13,11 +13,11 @@
 
 MONOLITHIC_CMD_TABLE_START()
 
-	{ "main", { .fa = cmph_main }},
+	{ "cmph", { .fa = cmph_main }},
 	{ "cxxcmph", { .fa = cmph_cxxcmph_main }},
 	{ "vector_adapter_ex1", { .fa = cmph_vector_adapter_ex1_main }},
 	{ "file_adapter_ex2", { .fa = cmph_file_adapter_ex2_main }},
-	{ "struct_veector_adapter_ex3", { .fa = cmph_struct_veector_adapter_ex3_main }},
+	{ "struct_vector_adapter_ex3", { .fa = cmph_struct_vector_adapter_ex3_main }},
 	{ "small_set_ex4", { .f = cmph_small_set_ex4_main }},
 	{ "bdz_gen_lookup_table", { .fa = cmph_bdz_gen_lookup_table_main }},
 

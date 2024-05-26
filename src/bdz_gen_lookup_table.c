@@ -4,10 +4,10 @@
 
 #include "monolithic_examples.h"
 
-static void help(const char * prname)
+static int help(const char * prname)
 {
 	fprintf(stderr, "USE: %s <n><wordsizeinbits>\n", prname);
-	exit(EXIT_FAILURE);
+	return EXIT_FAILURE;
 }
 
 
@@ -17,7 +17,8 @@ static void help(const char * prname)
 
 int main(int argc, const char ** argv)
 {
-	if(argc != 3) help(argv[0]);
+	if(argc != 3)
+		return help(argv[0]);
 	int n = atoi(argv[1]);
 	int wordsize = (atoi(argv[2]) >> 1);
 	int i, j, n_assigned;
