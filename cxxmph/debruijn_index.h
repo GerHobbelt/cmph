@@ -64,7 +64,7 @@ class debruijn_index {
   }
   void clear() {
     for (int i = 0; i < 64; ++i) pos[i] = 0;
-    m_ = 0; rank_ = 0; seed_ = random() % 27; padding_ = 0;
+    m_ = 0; rank_ = 0; seed_ = rand() % 27; padding_ = 0;
   }
  private:
   uint64_t rank_;
