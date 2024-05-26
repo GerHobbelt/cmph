@@ -13,6 +13,7 @@
 #include <string.h>
 #endif
 #endif
+#include <stdlib.h>
 
 #ifndef __GNUC__
 #ifndef __DEBUG_H__

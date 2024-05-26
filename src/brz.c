@@ -1026,5 +1026,6 @@ cmph_uint32 brz_search_packed(void *packed_mphf, const char *key, cmph_uint32 ke
 		case CMPH_BMZ8:
 			return brz_bmz8_search_packed(ptr, key, keylen, fingerprint);
 		default: assert(0);
+			return 0;
 	}
 }

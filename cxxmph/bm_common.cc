@@ -40,8 +40,8 @@ bool SearchUrlsBenchmark::SetUp() {
   forced_miss_urls_.resize(nsearches_);
   random_.resize(nsearches_);
   for (uint32_t i = 0; i < nsearches_; ++i) {
-    random_[i] = urls_[random() % urls_.size()];
-    if (random() < miss_ratio_int32) {
+    random_[i] = urls_[rand() % urls_.size()];
+    if (rand() < miss_ratio_int32) {
       forced_miss_urls_[i] = random_[i].as_string() + ".force_miss";
       random_[i] = forced_miss_urls_[i];
     }
@@ -54,7 +54,7 @@ bool Uint64Benchmark::SetUp() {
   set<uint64_t> unique;
   for (uint32_t i = 0; i < count_; ++i) {
     uint64_t v;
-    do { v = random(); } while (unique.find(v) != unique.end());
+    do { v = rand(); } while (unique.find(v) != unique.end());
     values_.push_back(v);
     unique.insert(v);
   }
@@ -66,7 +66,7 @@ bool SearchUint64Benchmark::SetUp() {
   if (!Uint64Benchmark::SetUp()) return false;
   random_.resize(nsearches_);
   for (uint32_t i = 0; i < nsearches_; ++i) {
-    uint32_t pos = random() % values_.size();
+    uint32_t pos = rand() % values_.size();
     random_[i] = values_[pos];
   }
   return true;

@@ -278,8 +278,8 @@ static cmph_uint8 bmz8_traverse_critical_nodes_heuristic(bmz8_config_data_t *bmz
 	cmph_uint32 lav;
 	cmph_uint8 collision;
 	cmph_uint8 * unused_g_values = NULL;
-	cmph_uint8 unused_g_values_capacity = 0;
-	cmph_uint8 nunused_g_values = 0;
+	unsigned int unused_g_values_capacity = 0;
+	unsigned int nunused_g_values = 0;
 	vqueue_t * q = vqueue_new((cmph_uint32)(graph_ncritical_nodes(bmz8->graph)));
 	graph_iterator_t it, it1;
 
@@ -296,7 +296,7 @@ static cmph_uint8 bmz8_traverse_critical_nodes_heuristic(bmz8_config_data_t *bmz
 		{
                	        if (graph_node_is_critical(bmz8->graph, u) && (!GETBIT(visited,u)))
 			{
-			        cmph_uint8 next_g_index = 0;
+			        unsigned int next_g_index = 0;
 			        collision = 1;
 			        while(collision) // lookahead to resolve collisions
 				{
@@ -332,17 +332,18 @@ static cmph_uint8 bmz8_traverse_critical_nodes_heuristic(bmz8_config_data_t *bmz
 					{
 					        if(nunused_g_values == unused_g_values_capacity)
 						{
-							unused_g_values = (cmph_uint8*)realloc(unused_g_values, ((size_t)(unused_g_values_capacity + BUFSIZ))*sizeof(cmph_uint8));
-						        unused_g_values_capacity += (cmph_uint8)BUFSIZ;
+							unused_g_values = (cmph_uint8*)realloc(unused_g_values, (unused_g_values_capacity + BUFSIZ)*sizeof(cmph_uint8));
+						        unused_g_values_capacity += BUFSIZ;
 						}
 						unused_g_values[nunused_g_values++] = next_g;
-
 					}
- 					if (next_g > *biggest_g_value) *biggest_g_value = next_g;
+ 					if (next_g > *biggest_g_value)
+						*biggest_g_value = next_g;
 				}
 
 				next_g_index--;
-				if (next_g_index < nunused_g_values) unused_g_values[next_g_index] = unused_g_values[--nunused_g_values];
+				if (next_g_index < nunused_g_values)
+					unused_g_values[next_g_index] = unused_g_values[--nunused_g_values];
 
 				// Marking used edges...
 				it1 = graph_neighbors_it(bmz8->graph, u);

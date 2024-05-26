@@ -4,6 +4,8 @@
 #include <iostream>
 #include <utility>
 
+#include "monolithic_examples.h"
+
 
 using std::cerr;
 using std::endl;
@@ -13,7 +15,14 @@ using std::make_pair;
 
 #include "hollow_iterator.h"
 
-int main(int, char**) {
+using cxxmph::is_empty;
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_hollow_iterator_test_main
+#endif
+
+int main(void) {
   vector<int> v;
   vector<bool> p;
   for (int i = 0; i < 100; ++i) {
@@ -53,7 +62,5 @@ int main(int, char**) {
   auto pend = make_iterator_second(make_hollow(&vp, &p, vp.end()));
   if (pbegin->second != pbegin->first + 1) exit(-1);
   while (pbegin != pend) ++pbegin;
-  
-
 }
 

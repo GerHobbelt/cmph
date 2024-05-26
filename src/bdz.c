@@ -684,7 +684,6 @@ cmph_uint32 bdz_packed_size(cmph_t *mphf)
  */
 cmph_uint32 bdz_search_packed(void *packed_mphf, const char *key, cmph_uint32 keylen)
 {
-
 	register cmph_uint32 vertex;
 	register CMPH_HASH hl_type  = (CMPH_HASH)(*(cmph_uint32 *)packed_mphf);
 	register cmph_uint8 *hl_ptr = (cmph_uint8 *)(packed_mphf) + 4;

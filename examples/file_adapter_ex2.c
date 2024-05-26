@@ -1,10 +1,19 @@
 #include <cmph.h>
 #include <stdio.h>
 #include <string.h>
- // Create minimal perfect hash function from in-disk keys using BDZ algorithm
-int main(int argc, char **argv)
+
+#include "monolithic_examples.h"
+
+// Create minimal perfect hash function from in-disk keys using BDZ algorithm
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_file_adapter_ex2_main
+#endif
+
+int main(int argc, const char **argv)
 {   
-	 //Open file with newline separated list of keys
+	// Open file with newline separated list of keys
 	FILE * keys_fd = fopen("keys.txt", "r");
 	cmph_t *hash = NULL;
 	if (keys_fd == NULL) 
@@ -20,11 +29,11 @@ int main(int argc, char **argv)
 	hash = cmph_new(config);
 	cmph_config_destroy(config);
    
-	//Find key
+	// Find key
 	const char *key = "jjjjjjjjjj";
 	unsigned int id = cmph_search(hash, key, (cmph_uint32)strlen(key));
 	fprintf(stderr, "Id:%u\n", id);
-	//Destroy hash
+	// Destroy hash
 	cmph_destroy(hash);
 	cmph_io_nlfile_adapter_destroy(source);   
 	fclose(keys_fd);

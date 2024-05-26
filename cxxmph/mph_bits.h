@@ -75,6 +75,7 @@ static uint32_t nextpoweroftwo(uint32_t k) {
 // Generalized theory to achieve something like debruijn multipliers
 // http://arxiv.org/pdf/1003.3196v2.pdf
 
+// Too slow to compile. Should use constexpr instead.
 struct Ranktable { static uint8_t get(uint8_t); };
 
 // From sux-0.7

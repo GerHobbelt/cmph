@@ -1,5 +1,5 @@
 #ifdef _WIN32
-#include "../wingetopt.h"
+#include "wingetopt.h"
 #else
 #include <getopt.h>
 #endif
@@ -13,12 +13,15 @@
 #include "cmph.h"
 //#include "hash.h"
 
+#include "monolithic_examples.h"
 
-void usage(const char *prg)
+
+static void usage(const char *prg)
 {
 	fprintf(stderr, "usage: %s [-v] [-h] [-V] [-t keys_per_bin] [-k nkeys] [-m file.mph]  keysfile\n", prg);   
 }
-void usage_long(const char *prg)
+
+static void usage_long(const char *prg)
 {
 	fprintf(stderr, "usage: %s [-v] [-h] [-V] [-t keys_per_bin] [-k nkeys] [-m file.mph] keysfile\n", prg);   
 	fprintf(stderr, "Packed MPHFs testing tool\n\n"); 
@@ -32,7 +35,12 @@ void usage_long(const char *prg)
 	fprintf(stderr, "  keysfile\t line separated file with keys\n");
 }
 
-int main(int argc, char **argv)
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_packed_mphf_tests_main
+#endif
+
+int main(int argc, const char **argv)
 {
 	char verbosity = 0;
 	char *mphf_file = NULL;

@@ -24,7 +24,7 @@ TCase* global_tc_core();
 #define CXXMPH_TEST_CASE(name) CXXMPH_CXX_TEST_CASE(name, name)
 
 struct TestCase {
-  TestCase(void (*f)(int)) {
+  TestCase(const TTest * f) {
     tcase_add_test(global_tc_core(), f);
   }
 };

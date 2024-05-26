@@ -2,6 +2,8 @@
 
 #include "test.h"
 
+#include "monolithic_examples.h"
+
 Suite* global_suite() {
   static Suite* gs = suite_create("cxxmph_test_suite");
   return gs;
@@ -10,6 +12,11 @@ TCase* global_tc_core() {
   static TCase* gtc = tcase_create("Core");
   return gtc;
 }
+
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_test_main
+#endif
 
 int main (void) {
   suite_add_tcase(global_suite(), global_tc_core());

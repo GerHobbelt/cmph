@@ -2,7 +2,10 @@
 
 #define DEBUG
 #include "../src/debug.h"
+
 #include <stdlib.h>
+
+#include "monolithic_examples.h"
 
 static inline void print_values(select_t * sel)
 {
@@ -57,7 +60,12 @@ static inline void print_values_packed(char * sel_packed)
 	fprintf(stderr, "Index[3]\t= %u\n", index - 3);
 }
 
-int main(int argc, char **argv)
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_select_tests_main
+#endif
+
+int main(int argc, const char **argv)
 {
 	select_t sel;
 	cmph_uint32 n = 4;

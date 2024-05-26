@@ -1,6 +1,8 @@
 #include <cmph.h>
 
-int test(cmph_uint32* items_to_hash, cmph_uint32 items_len, CMPH_ALGO alg_n)
+#include "monolithic_examples.h"
+
+static int test(cmph_uint32* items_to_hash, cmph_uint32 items_len, CMPH_ALGO alg_n)
 {
     cmph_t *hash;
     cmph_config_t *config;
@@ -52,7 +54,12 @@ int test(cmph_uint32* items_to_hash, cmph_uint32 items_len, CMPH_ALGO alg_n)
     return 0;
 }
 
-int main (void)
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_small_set_ex4_main
+#endif
+
+int main(void)
 {
     cmph_uint32 vec1[] = {1,2,3,4,5};
     cmph_uint32 vec1_len = 5;

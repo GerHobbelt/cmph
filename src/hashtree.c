@@ -1,7 +1,7 @@
 #include "graph.h"
 #include "hashtree.h"
 #include "cmph_structs.h"
-#include "hastree_structs.h"
+#include "hashtree_structs.h"
 #include "hash.h"
 #include "bitbool.h"
 
@@ -13,6 +13,9 @@
 
 //#define DEBUG
 #include "debug.h"
+
+static int hashtree_gen_edges(cmph_config_t* mph);
+static void hashtree_traverse(hashtree_config_data_t* hashtree, cmph_uint8* visited, cmph_uint32 v);
 
 hashtree_config_data_t *hashtree_config_new()
 {
@@ -102,7 +105,7 @@ cmph_t *hashtree_new(cmph_config_t *mph, double c)
 		fprintf(stderr, "Starting assignment step\n");
 	}
 	DEBUGP("Assignment step\n");
- 	visited = (char *)malloc(hashtree->n/8 + 1);
+ 	visited = (cmph_uint8 *)malloc(hashtree->n/8 + 1);
 	memset(visited, 0, hashtree->n/8 + 1);
 	free(hashtree->g);
 	hashtree->g = (cmph_uint32 *)malloc(hashtree->n * sizeof(cmph_uint32));
@@ -140,7 +143,6 @@ cmph_t *hashtree_new(cmph_config_t *mph, double c)
 
 static void hashtree_traverse(hashtree_config_data_t *hashtree, cmph_uint8 *visited, cmph_uint32 v)
 {
-
 	graph_iterator_t it = graph_neighbors_it(hashtree->graph, v);
 	cmph_uint32 neighbor = 0;
 	SETBIT(visited,v);
@@ -277,6 +279,7 @@ cmph_uint32 hashtree_search(cmph_t *mphf, const char *key, cmph_uint32 keylen)
 	DEBUGP("key: %s g[h1]: %u g[h2]: %u edges: %u\n", key, hashtree->g[h1], hashtree->g[h2], hashtree->m);
 	return (hashtree->g[h1] + hashtree->g[h2]) % hashtree->m;
 }
+
 void hashtree_destroy(cmph_t *mphf)
 {
 	hashtree_data_t *data = (hashtree_data_t *)mphf->data;
