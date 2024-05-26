@@ -30,7 +30,7 @@ void tostr(std::ostream* out, const bucketed_key<Key>& k) {
 } // namespace cxxmph
 
 namespace std {
-template <> template<class Key>
+template<class Key>
 struct hash<cxxmph::bucketed_key<Key>> {
   uint32_t operator()(const cxxmph::bucketed_key<Key>& k) const {
     return hash_(k.key);
@@ -38,7 +38,7 @@ struct hash<cxxmph::bucketed_key<Key>> {
  private:
   std::hash<Key> hash_;
 };
-template <> template<class Key>
+template<class Key>
 struct equal_to<cxxmph::bucketed_key<Key>> {
   bool operator()(const cxxmph::bucketed_key<Key>& a,
                   const cxxmph::bucketed_key<Key>& b) const {

@@ -30,6 +30,11 @@ int cmph_struct_vector_adapter_ex3_main(int argc, const char **argv);
 int cmph_test_main(void);
 int cmph_trigraph_test_main(int argc, const char **argv);
 int cmph_vector_adapter_ex1_main(int argc, const char **argv);
+int cmph_perfect_cuckoo_test_main(int argc, const char **argv);
+int cmph_mph_map_test_main(int argc, const char **argv);
+int cmph_flatten_iterator_test_main(int argc, const char **argv);
+int cmph_debruijn_index_main(int argc, const char **argv);
+int cmph_bfcr_map_test_main(int argc, const char **argv);
 
 #ifdef __cplusplus
 }

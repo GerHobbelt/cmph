@@ -47,7 +47,7 @@ int main(int argc, const char** argv) {
   vector<int> k2;
   for (int i = 0; i < 512;  ++i) { k2.push_back(i); }
   SimpleMPHIndex<int> k2_index;
-  if (!k2_index.Reset(k2.begin(), k2.end(), k2.size())) { exit(-1); }
+  if (!k2_index.Reset(k2.begin(), k2.end(), k2.size())) { return EXIT_FAILURE; }
 
   // Test serialization
   vector<uint32_t> params;

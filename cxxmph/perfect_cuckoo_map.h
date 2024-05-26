@@ -85,10 +85,12 @@ class perfect_cuckoo_map {
     uint32_t b);
 
   iterator make_iterator(typename std::vector<value_type>::iterator it) {
-    return hollow_iterator<std::vector<value_type>>(&values_, &present_, it);
+		return make_hollow(&values_, &present_, it);
+    //return hollow_iterator<std::vector<value_type>, is_empty_type>(&values_, &present_, it);
   }
   const_iterator make_iterator(typename std::vector<value_type>::const_iterator it) const {
-    return hollow_const_iterator<std::vector<value_type>>(&values_, &present_, it);
+		return make_hollow(&values_, &present_, it);
+    //return hollow_const_iterator<std::vector<value_type>, is_empty_type>(&values_, &present_, it);
   }
 
   uint32_t n_;  // number of keys
@@ -108,7 +110,7 @@ PC_MAP_INLINE_METHOD_DECL(const_iterator, begin)() const { return make_hollow(&v
 PC_MAP_INLINE_METHOD_DECL(const_iterator, end)() const { return make_solid(&values_, &present_, values_.end()); }
 
 PC_MAP_TMPL_SPEC PC_MAP_CLASS_SPEC::perfect_cuckoo_map()
-    : n_(0), seed_(random()), index_(2), values_(2*8), present_(2*8) {
+    : n_(0), seed_(rand()), index_(2), values_(2*8), present_(2*8) {
 }
 
 PC_MAP_METHOD_DECL(insert_return_type, insert)(const value_type& x) {
@@ -165,7 +167,7 @@ PC_MAP_METHOD_DECL(bool_type, pack)(bool minimal) {
   while (iterations--) {
     bool success = true;
     vector<vector<value_type>> new_buckets(new_index.size());
-    int seed = random();
+    int seed = rand();
     assert(size() <= new_buckets.size()*8);
     for (auto it = begin(); it != end(); ++it) {
       auto h = hasher_(it->first, seed);

@@ -37,8 +37,12 @@ MONOLITHIC_CMD_TABLE_START()
 	{ "packed_mphf_tests", {.fa = cmph_packed_mphf_tests_main } },
 	{ "seeded_has_test", {.fa = cmph_seeded_has_test_main } },
 	{ "select_tests", {.fa = cmph_select_tests_main } },
-	{ "test", {.f = cmph_test_main } },
 	{ "trigraph_test", {.fa = cmph_trigraph_test_main } },
+	{ "perfect_cuckoo_test", {.fa = cmph_perfect_cuckoo_test_main } },
+	{ "mph_map_test", { .fa = cmph_mph_map_test_main } },
+	{ "flatten_iterator_test", { .fa = cmph_flatten_iterator_test_main } },
+	{ "debruijn_index", { .fa = cmph_debruijn_index_main } },
+	{ "bfcr_map_test", { .fa = cmph_bfcr_map_test_main } },
 #endif
 
 MONOLITHIC_CMD_TABLE_END();

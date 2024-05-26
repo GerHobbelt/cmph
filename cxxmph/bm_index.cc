@@ -46,11 +46,12 @@ class BM_MPHIndexSearch : public SearchUrlsBenchmark {
   BM_MPHIndexSearch(const std::string& urls_file, int nsearches)
       : SearchUrlsBenchmark(urls_file, nsearches, 0) { }
   virtual void Run() {
-    uint64_t sum = 0;
+    //uint64_t sum = 0;
     for (auto it = random_.begin(); it != random_.end(); ++it) {
       auto idx = index_.index(*it);
       // Collision check to be fair with STL
       if (strcmp(urls_[idx].c_str(), it->data()) != 0) idx = -1;
+      //sum += idx;
     }
   }
  protected:

@@ -11,7 +11,7 @@ endif
 bin_PROGRAMS = cxxmph
 
 cxxmph_includedir = $(includedir)/cxxmph/
-cxxmph_include_HEADERS = mph_bits.h mph_map.h mph_index.h MurmurHash3.h trigraph.h seeded_hash.h stringpiece.h hollow_iterator.h string_util.h power_index.h
+cxxmph_include_HEADERS = mph_bits.h mph_map.h mph_index.h MurmurHash3.h trigraph.h seeded_hash.h stringpiece.h hollow_iterator.h string_util.h power_index.h power_map.h
 
 noinst_LTLIBRARIES = libcxxmph_bm.la
 lib_LTLIBRARIES = libcxxmph.la
@@ -29,6 +29,9 @@ mph_map_test_LDADD = libcxxmph_test.la $(CHECK_LIBS)
 mph_map_test_SOURCES = mph_map_test.cc
 dense_hash_map_test_LDADD = libcxxmph_test.la $(CHECK_LIBS)
 dense_hash_map_test_SOURCES = dense_hash_map_test.cc
+power_map_test_LDADD = libcxxmph_test.la $(CHECK_LIBS)
+power_map_test_SOURCES = power_map_test.cc
+
 power_index_test_LDADD = libcxxmph_test.la $(CHECK_LIBS)
 power_index_test_SOURCES = power_index_test.cc
 

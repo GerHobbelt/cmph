@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT([cmph], [2.0.2])
 AC_CONFIG_SRCDIR([Makefile.am])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE(cmph, 2.0.2)
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 

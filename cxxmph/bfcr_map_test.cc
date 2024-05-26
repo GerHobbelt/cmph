@@ -5,13 +5,20 @@
 
 #include "bfcr_map.h"
 
+#include "monolithic_examples.h"
+
 using std::cerr;
 using std::endl;
 using std::make_pair;
 using std::string;
 using cxxmph::bfcr_map;
 
-int main(int argc, char** argv) {
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_bfcr_map_test_main
+#endif
+
+int main(int argc, const char** argv) {
   bfcr_map<int64_t, int64_t> b;
   int32_t num_keys = 19;
   for (int i = 0; i < num_keys; ++i) {
@@ -24,11 +31,11 @@ int main(int argc, char** argv) {
     auto it = b.find(i % num_keys);
     if (it == b.end()) {
       std::cerr << "Failed to find " << i << std::endl;
-      exit(-1);
+			return EXIT_FAILURE;
     }
     if (it->first != it->second || it->first != i % num_keys) {
       std::cerr << "Found " << it->first << " looking for " << i << std::endl;
-      exit(-1);
+			return EXIT_FAILURE;
     }
   }
   cerr << "Ended with success" << endl;
@@ -39,7 +46,7 @@ int main(int argc, char** argv) {
   for (auto it = h.begin(); it != h.end(); ++it) {
     if (it->second != -1) {
       fprintf(stderr, "Failed to find single key -1. Got %s instead.\n", it->first.data());
-      exit(-1);
+			return EXIT_FAILURE;
     }
   }
   int32_t num_valid = 100;
@@ -53,7 +60,7 @@ int main(int argc, char** argv) {
        char buf[10];    
        snprintf(buf, 10, "%d", i - 1);
        auto it = h.find(buf);
-       if (i < num_valid && it->second != i - 1) exit(-1);
+       if (i < num_valid && it->second != i - 1) return EXIT_FAILURE;
     }
   }
   for (int j = 0; j < 100; ++j) {
@@ -62,7 +69,7 @@ int main(int argc, char** argv) {
        int key = i*100 - 1;
        snprintf(buf, 10, "%d", key);
        auto it = h.find(buf);
-       if (key < num_valid && it->second != key) exit(-1);
+       if (key < num_valid && it->second != key) return EXIT_FAILURE;
     }
   }
   fprintf(stderr, "Size is %lu\n", (unsigned long)h.size());
@@ -73,6 +80,7 @@ int main(int argc, char** argv) {
   }
   if (h.size() != 1) {
     fprintf(stderr, "Erase failed: size is %lu\n", (unsigned long)h.size());
-    exit(-1);
+		return EXIT_FAILURE;
   }
+	return EXIT_SUCCESS;
 }

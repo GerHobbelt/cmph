@@ -5,11 +5,17 @@
 
 #include "flatten_iterator.h"
 
+#include "monolithic_examples.h"
+
 using namespace cxxmph;
 using namespace std;
 
-int main(int argc, char** argv) {
 
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_flatten_iterator_test_main
+#endif
+
+int main(int argc, const char** argv) {
   vector<int> flat;
   vector<vector<int>> v;
   v.push_back(vector<int>());
@@ -29,10 +35,13 @@ int main(int argc, char** argv) {
   auto end = make_flatten_end(&v);
   uint32_t i = 0;
   for (auto it = begin; it != end; ++it, ++i) {
-    if (i > flat.size()) { fprintf(stderr, "size error\n");  exit(-1); }
+    if (i > flat.size()) {
+			fprintf(stderr, "size error\n");
+			return EXIT_FAILURE;
+		}
     if (flat[i] != *it) {
       fprintf(stderr, "expected: %d got %d\n", flat[i], *it);
-      exit(-1);
+			return EXIT_FAILURE;
     }
   }
 
@@ -47,10 +56,13 @@ int main(int argc, char** argv) {
   end = make_flatten_end(&v);
   i = 0;
   for (auto it = begin; it != end; ++it, ++i) {
-    if (i > flat.size()) { fprintf(stderr, "size error\n");  exit(-1); }
+    if (i > flat.size()) {
+			fprintf(stderr, "size error\n");
+			return EXIT_FAILURE;
+		}
     if (flat[i] != *it) {
       fprintf(stderr, "expected: %d got %d\n", flat[i], *it);
-      exit(-1);
+			return EXIT_FAILURE;
     }
   }
 
@@ -65,24 +77,25 @@ int main(int argc, char** argv) {
   end = make_flatten_end(&v);
   i = 0;
   for (auto it = begin; it != end; ++it, ++i) {
-    if (i > flat.size()) { fprintf(stderr, "size error\n");  exit(-1); }
+    if (i > flat.size()) {
+			fprintf(stderr, "size error\n");
+			return EXIT_FAILURE;
+		}
     if (flat[i] != *it) {
       fprintf(stderr, "expected: %d got %d\n", flat[i], *it);
-      exit(-1);
+			return EXIT_FAILURE;
     }
   }
-
-
   
   flatten_const_iterator<vector<vector<int>>> const_begin(begin);
   flatten_const_iterator<vector<vector<int>>> const_end(end);
   i = 0;
   for (auto it = const_begin; it != const_end; ++it, ++i) {
-    if (flat[i] != *it) exit(-1);
+    if (flat[i] != *it) return EXIT_FAILURE;
   }
   auto it1 = make_flatten_begin(&v);
   auto it2 = make_flatten_begin(&v);
-  if (it1 != it2) exit(-1);
+  if (it1 != it2) return EXIT_FAILURE;
 
   flatten_iterator<vector<vector<int>>> default_constructed;
   default_constructed = flatten_iterator<vector<vector<int>>>(&v, v.begin());
@@ -91,4 +104,6 @@ int main(int argc, char** argv) {
   vector<vector<pair<string, string>>>::iterator myot;
   vector<pair<string, string>>::iterator myit;
   make_flatten(&vs, myot, myit);
+
+	return EXIT_SUCCESS;
 }

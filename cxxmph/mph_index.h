@@ -130,7 +130,8 @@ bool MPHIndex::Reset(
   if ((r_ % 2) == 0) r_ += 1;
   // This can be used to speed mods, but increases occupation too much. 
   // Needs to try http://gmplib.org/manual/Integer-Exponentiation.html instead
-  // r_ = nextpoweroftwo(r_);
+  if (square_) r_ = nextpoweroftwo(r_);
+  
   nest_displacement_[0] = 0;
   nest_displacement_[1] = r_;
   nest_displacement_[2] = (r_ << 1);
@@ -182,12 +183,15 @@ bool MPHIndex::Mapping(
 template <class SeededHashFcn, class Key>
 uint32_t MPHIndex::perfect_square(const Key& key) const {
   h128 h = SeededHashFcn().hash128(key, hash_seed_[0]);
+#if 0
+  h[0] = (h[0] & (r_-1)) + nest_displacement_[0];
+  h[1] = (h[1] & (r_-1)) + nest_displacement_[1];
+  h[2] = (h[2] & (r_-1)) + nest_displacement_[2];
+#else
   h[0] = (h[0] % r_) + nest_displacement_[0];
   h[1] = (h[1] % r_) + nest_displacement_[1];
   h[2] = (h[2] % r_) + nest_displacement_[2];
-  // h[0] = (h[0] & (r_-1)) + nest_displacement_[0];
-  // h[1] = (h[1] & (r_-1)) + nest_displacement_[1];
- // h[2] = (h[2] & (r_-1)) + nest_displacement_[2];
+#endif
   assert((h[0]) < g_.size());
   assert((h[1]) < g_.size());
   assert((h[2]) < g_.size());

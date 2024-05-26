@@ -1,7 +1,9 @@
 #include <string>
 #include <utility>
 
-#include "perfect_cuckoo.h"
+#include "perfect_cuckoo_map.h"
+
+#include "monolithic_examples.h"
 
 using cxxmph::perfect_cuckoo_map;
 using std::string;
@@ -9,13 +11,18 @@ using std::cerr;
 using std::endl;
 using std::make_pair;
 
-int main(int argc, char** argv) {
+
+#if defined(BUILD_MONOLITHIC)
+#define main		cmph_perfect_cuckoo_test_main
+#endif
+
+int main(int argc, const char** argv) {
   perfect_cuckoo_map<int64_t, int64_t> b;
   int32_t num_keys = 10*1;
   for (int i = 0; i < num_keys; ++i) {
     if (!b.insert(make_pair(i, i)).second) {
       std::cerr << "Insertion of unknown key failed" << std::endl;
-      exit(-1);
+			return EXIT_FAILURE;
     }
   }
   // b.rehash(b.size());
@@ -23,11 +30,11 @@ int main(int argc, char** argv) {
     auto it = b.find(i % num_keys);
     if (it == b.end()) {
       std::cerr << "Failed to find " << i << std::endl;
-      exit(-1);
+			return EXIT_FAILURE;
     }
     if (it->first != it->second || it->first != i % num_keys) {
       std::cerr << "Found " << it->first << " looking for " << i << std::endl;
-      exit(-1);
+			return EXIT_FAILURE;
     }
   }
 
@@ -37,14 +44,14 @@ int main(int argc, char** argv) {
   for (it = h.begin(); it != h.end(); ++it) {
     if (it->second != -1) {
       cerr << "Failed to find value in single key map" << endl;
-      exit(-1);
+			return EXIT_FAILURE;
     }
   }
   h.find("-1")->second = -2;
   h["-1"] = -3;
   if (h["-1"] != -3) {
     cerr << "operator[] failed" << endl;
-    exit(-1);
+		return EXIT_FAILURE;
   }
   int32_t num_valid = 100;
   for (int i = 0; i < num_valid; ++i) {
@@ -54,7 +61,7 @@ int main(int argc, char** argv) {
      auto it = h.find(buf);
      if (it->second != i) {
        cerr << "Failed search after insertion " << i << " got " << it->second << endl;
-       exit(-1);
+			 return EXIT_FAILURE;
      }
   }
   for (int j = 0; j < 100; ++j) {
@@ -64,7 +71,7 @@ int main(int argc, char** argv) {
        auto it = h.find(buf);
        if (i < num_valid && it->second != i - 1) {
          cerr << "Failed looking for " << (i-1) << " got " << it->second << endl;
-         exit(-1);
+				 return EXIT_FAILURE;
        }
     }
   }
@@ -74,7 +81,8 @@ int main(int argc, char** argv) {
        int key = i*100 - 1;
        snprintf(buf, 10, "%d", key);
        auto it = h.find(buf);
-       if (key < num_valid && it->second != key) exit(-1);
+       if (key < num_valid && it->second != key) return EXIT_FAILURE;
     }
   }
+	return EXIT_SUCCESS;
 }

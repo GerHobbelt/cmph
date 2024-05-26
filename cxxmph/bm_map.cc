@@ -55,7 +55,8 @@ class BM_SearchUrls : public SearchUrlsBenchmark {
     for (auto it = random_.begin(); it != random_.end(); ++it) {
       auto v = myfind(mymap_, *it);
       if (*v != *it) exit(-1);
-      if (v) total += v->length();
+      if (v) 
+	    ++total;
     }
     fprintf(stderr, "Total: %u\n", total);
   }
@@ -87,7 +88,7 @@ class BM_SearchUint64 : public SearchUint64Benchmark {
     // Double check if everything is all right
     for (uint32_t i = 0; i < values_.size(); ++i) {
       if (mymap_[values_[i]] != values_[i]) {
-        cerr << "Looking for " << i << "th key value " << values_[i]
+        cerr << "Doing double check: Looking for " << i << "th key value " << values_[i]
              << " yielded " << mymap_[values_[i]] << endl;
         return false;
       }
@@ -117,6 +118,10 @@ using namespace cxxmph;
 
 int main(int argc, const char** argv) {
   srand(4);
+  Benchmark::Register(new BM_CreateUrls<dense_map_type>("URLS100k"));
+  Benchmark::Register(new BM_CreateUrls<bfcr_map<StringPiece, StringPiece>>("URLS100k"));
+  Benchmark::Register(new BM_CreateUrls<mph_map<StringPiece, StringPiece>>("URLS100k"));
+  Benchmark::Register(new BM_CreateUrls<unordered_map<StringPiece, StringPiece>>("URLS100k"));
   Benchmark::Register(new BM_SearchUrls<dense_map_type>("URLS100k", 10*1000 * 1000, 0));
   Benchmark::Register(new BM_SearchUrls<bfcr_map<StringPiece, StringPiece>>("URLS100k", 10*1000 * 1000, 0));
   Benchmark::Register(new BM_SearchUrls<mph_map<StringPiece, StringPiece>>("URLS100k", 10*1000 * 1000, 0));

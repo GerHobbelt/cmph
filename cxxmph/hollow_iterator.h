@@ -49,20 +49,12 @@ struct hollow_iterator_base
   self_reference operator++() { ++it_; advance(); return *this; }
   // self_type operator++() { auto tmp(*this); ++tmp; return tmp; }
 
-  // TODO find syntax to make this less permissible at compile time
-  template <class T>
-  bool operator==(const T& rhs) const { return rhs.it_ == this->it_; }
-  template <class T>
-  bool operator!=(const T& rhs) const { return rhs.it_ != this->it_; }
+  template <typename const_iterator>
+  bool operator==(const hollow_iterator_base<const_iterator, is_empty>& rhs) { return rhs.it_ == it_; }
+  template <typename const_iterator>
+  bool operator!=(const hollow_iterator_base<const_iterator, is_empty>& rhs) { return rhs.it_ != it_; }
 
-  iterator_type fill_iterator() const { return it_; }
-
- public:  // TODO find syntax to make this friend of const iterator
-  void find_present() {
-    while (it_ != c_->end() && !((*p_)[it_-c_->begin()])) ++it_;
-  }
-  container* c_;
-  presence* p_;
+  // should be friend
   iterator it_;
   is_empty empty_;
 

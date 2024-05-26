@@ -11,6 +11,8 @@
 //
 // Consider using https://github.com/c42f/tinyformat instead.
 
+// string_util.h(94, 32): warning C4996: 'std::is_pod<std::string>': warning STL4025: std::is_pod and std::is_pod_v are deprecated in C++20. The std::is_trivially_copyable and/or std::is_standard_layout traits likely suit your use case. You can define _SILENCE_CXX20_IS_POD_DEPRECATION_WARNING or _SILENCE_ALL_CXX20_DEPRECATION_WARNINGS to suppress this warning.
+
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
