@@ -58,7 +58,7 @@ class dynamic_2bitset {
   const uint8_t ones() { return std::numeric_limits<uint8_t>::max(); }
 };
 
-static uint32_t nextpoweroftwo(uint32_t k) {
+static inline uint32_t nextpoweroftwo(uint32_t k) {
   if (k == 0) return 1;
   k--;
   for (uint32_t i=1; i<sizeof(uint32_t)*CHAR_BIT; i<<=1) k = k | k >> i;
@@ -79,20 +79,20 @@ static uint32_t nextpoweroftwo(uint32_t k) {
 struct Ranktable { static uint8_t get(uint8_t); };
 
 // From sux-0.7
-static uint8_t rank64(uint64_t x) {
-  register uint64_t byte_sums = x - ( ( x & 0xa * ONES_STEP_4 ) >> 1 );
+static inline uint8_t rank64(uint64_t x) {
+  uint64_t byte_sums = x - ( ( x & 0xa * ONES_STEP_4 ) >> 1 );
   byte_sums = ( byte_sums & 3 * ONES_STEP_4 ) + ( ( byte_sums >> 2 ) & 3 * ONES_STEP_4 );
   byte_sums = ( byte_sums + ( byte_sums >> 4 ) ) & 0x0f * ONES_STEP_8;
   return byte_sums * ONES_STEP_8 >> 56;
 };
 
-static uint8_t rank32(uint32_t v) {
+static inline uint8_t rank32(uint32_t v) {
   v = v - ((v >> 1) & 0x55555555); // reuse input as temporary
   v = (v & 0x33333333) + ((v >> 2) & 0x33333333);     // temp
   return (((v + (v >> 4)) & 0xF0F0F0F) * 0x1010101) >> 24; // count
 }
 
-static uint64_t select64(uint64_t x, uint8_t k) { 
+static inline uint64_t select64(uint64_t x, uint8_t k) { 
   #ifdef SELPOPCOUNT
   for( int i = 0, c = k; i < 64; i+=8 )
     if ( ( c -= popcount[ x >> i & 0xFF ] ) < 0 ) {
@@ -103,7 +103,7 @@ static uint64_t select64(uint64_t x, uint8_t k) {
   #endif
 
   // Phase 1: sums by byte
-  register uint64_t byte_sums = x - ( ( x & 0xa * ONES_STEP_4 ) >> 1 );
+  uint64_t byte_sums = x - ( ( x & 0xa * ONES_STEP_4 ) >> 1 );
   byte_sums = ( byte_sums & 3 * ONES_STEP_4 ) + ( ( byte_sums >> 2 ) & 3 * ONES_STEP_4 );
   byte_sums = ( byte_sums + ( byte_sums >> 4 ) ) & 0x0f * ONES_STEP_8;
   byte_sums *= ONES_STEP_8;
@@ -126,7 +126,7 @@ static uint64_t select64(uint64_t x, uint8_t k) {
   
 
 
-static uint8_t rank64th(uint64_t v, uint32_t pos) {
+static inline uint8_t rank64th(uint64_t v, uint32_t pos) {
   uint64_t r;       // Resulting rank of bit at pos goes here.
 
   // Shift out bits after given position.
@@ -143,9 +143,9 @@ static uint8_t rank64th(uint64_t v, uint32_t pos) {
   return r;
 }
 
-static const uint64_t ones() { return std::numeric_limits<uint64_t>::max(); }
+static inline const uint64_t ones() { return std::numeric_limits<uint64_t>::max(); }
 
-static const uint8_t most_significant_bit(uint64_t v, uint8_t r) {
+static inline const uint8_t most_significant_bit(uint64_t v, uint8_t r) {
   unsigned int s;      // Output: Resulting position of bit with rank r [1-64]
   uint64_t a, b, c, d; // Intermediate temporaries for bit count.
   unsigned int t;      // Bit count temporary.
@@ -184,15 +184,15 @@ static const uint8_t most_significant_bit(uint64_t v, uint8_t r) {
   return s;
 }
 
-inline uint64_t rotl64 ( uint64_t x, int8_t r )
+static inline uint64_t rotl64 ( uint64_t x, int8_t r )
 {
   return (x << r) | (x >> (64 - r));
 }
 
-inline uint32_t rotl32 (uint32_t x, int8_t r) {
+static inline uint32_t rotl32 (uint32_t x, int8_t r) {
   return (x << r) | (x >> (32 - r));
 }
-inline uint32_t fmix(uint32_t h) {
+static inline uint32_t fmix(uint32_t h) {
   h ^= h >> 16;
   h *= 0x85ebca6b;
   h ^= h >> 13;
@@ -201,10 +201,10 @@ inline uint32_t fmix(uint32_t h) {
 
   return h;
 }
-inline uint32_t reseed2(uint32_t h, uint32_t seed) {
+static inline uint32_t reseed2(uint32_t h, uint32_t seed) {
   return fmix(h ^ seed);
 }
-inline uint32_t reseed32(uint32_t h, uint32_t seed) {
+static inline uint32_t reseed32(uint32_t h, uint32_t seed) {
   uint32_t c1 = 0xcc9e2d51;
   uint32_t c2 = 0x1b873593;
 
@@ -223,10 +223,10 @@ inline uint32_t reseed32(uint32_t h, uint32_t seed) {
 
 // http://bits.stephan-brumme.com/minmax.html
 // if (zero_or_ones == ones()) return ones() else return self;
-inline uint32_t branch_free_end(uint32_t self, uint32_t zero_or_ones) {
+static inline uint32_t branch_free_end(uint32_t self, uint32_t zero_or_ones) {
   return (zero_or_ones & (ones() ^ self)) ^ self;
 }
-inline int select(int x, int y, int ifXisSmaller, int ifYisSmaller) {
+static inline int select(int x, int y, int ifXisSmaller, int ifYisSmaller) {
   int diff  = x - y;
   // sets bit31 to 0xFFFFFFFF if x<y, else 0x00000000
   int bit31 = diff >> 31;
@@ -234,8 +234,8 @@ inline int select(int x, int y, int ifXisSmaller, int ifYisSmaller) {
   // return ifXisSmaller if x is smaller than y, else y
   return (bit31 & (ifXisSmaller ^ ifYisSmaller)) ^ ifYisSmaller;
 }
-inline int minimum(int x, int y) { return select(x,y,x,y); }
-inline int maximum(int x, int y) { return select(x,y,y,x); }
+static inline int minimum(int x, int y) { return select(x,y,x,y); }
+static inline int maximum(int x, int y) { return select(x,y,y,x); }
  
 }  // namespace cxxmph
 
