@@ -241,7 +241,7 @@ POWER_MAP_METHOD_DECL(bool_type, slow_insert)(const value_type& x) {
   if (!calculate_bucket_ph(b, &h, &ph)) return false;
 
   // TODO(davi) Move everyone in the bucket according to the new ph
-  for (int i = b; i < b + 256; ++i) {}
+  for (int i = b; i < b + 256; ++i) {
     auto idx = b + i;
   }
 
@@ -252,7 +252,6 @@ POWER_MAP_METHOD_DECL(bool_type, slow_insert)(const value_type& x) {
   assert((!present_[idx]) || values_[idx] == x);
   values_[idx] = x;
   present_[idx] = true;
-  cost_[idx] = keys.size() * keys.size();
   ph_[b] = ph;
   ++size_;
   return true;
@@ -302,7 +301,7 @@ POWER_MAP_METHOD_DECL(bool_type, Reset)(
   decltype(ph_)(siz).swap(ph_);
   capacity_ = nbuckets;
   size_ = 0;
-  seed_ = random();
+  seed_ = rand();
   CXXMPH_DEBUGLN("Seed initialized to %v for %v buckets (siz %v)")(
       seed_, nbuckets, siz);
   for (auto it = a; it != b; ++it) {
