@@ -1,6 +1,6 @@
 #include "jenkins_hash.h"
 #include <stdlib.h>
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(_USE_MATH_DEFINES)
 #define _USE_MATH_DEFINES //For M_LOG2E
 #endif
 #include <math.h>
