@@ -92,7 +92,7 @@ void bm_search(CMPH_ALGO algo, int iters) {
   lsmap_append(g_mphf_probes, create_lsmap_key(algo, iters), hash_count);
 }
 
-void verify() { }
+void verify(void) { }
 
 #define DECLARE_ALGO(algo) \
   void bm_create_ ## algo(int iters) { bm_create(algo, iters); } \

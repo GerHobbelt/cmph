@@ -1,7 +1,7 @@
 #include "djb2_hash.h"
 #include <stdlib.h>
 
-djb2_state_t *djb2_state_new()
+djb2_state_t *djb2_state_new(void)
 {
 	djb2_state_t *state = (djb2_state_t *)malloc(sizeof(djb2_state_t));
         if (!state) return NULL;

@@ -72,7 +72,7 @@ benchmark_t* find_benchmark(const char* name) {
   return benchmark;
 }
 
-int global_benchmarks_length() {
+int global_benchmarks_length(void) {
   benchmark_t* benchmark = global_benchmarks;
   int length = 0;
   if (benchmark == NULL) return 0;

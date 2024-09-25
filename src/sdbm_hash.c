@@ -1,7 +1,7 @@
 #include "sdbm_hash.h"
 #include <stdlib.h>
 
-sdbm_state_t *sdbm_state_new()
+sdbm_state_t *sdbm_state_new(void)
 {
 	sdbm_state_t *state = (sdbm_state_t *)malloc(sizeof(sdbm_state_t));
         if (!state) return NULL;

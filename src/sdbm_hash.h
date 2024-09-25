@@ -8,7 +8,7 @@ typedef struct __sdbm_state_t
 	CMPH_HASH hashfunc;
 } sdbm_state_t;
 
-sdbm_state_t *sdbm_state_new();
+sdbm_state_t *sdbm_state_new(void);
 cmph_uint32 sdbm_hash(sdbm_state_t *state, const char *k, cmph_uint32 keylen);
 void sdbm_state_dump(sdbm_state_t *state, char **buf, cmph_uint32 *buflen);
 sdbm_state_t *sdbm_state_copy(sdbm_state_t *src_state);
