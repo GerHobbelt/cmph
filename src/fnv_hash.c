@@ -1,7 +1,7 @@
 #include "fnv_hash.h"
 #include <stdlib.h>
 
-fnv_state_t *fnv_state_new()
+fnv_state_t *fnv_state_new(void)
 {
 	fnv_state_t *state = (fnv_state_t *)malloc(sizeof(fnv_state_t));
         if (!state) return NULL;

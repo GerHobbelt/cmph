@@ -10,7 +10,7 @@ struct __linear_string_map_t {
   struct __linear_string_map_t* next;
 };
 
-lsmap_t *lsmap_new() {
+lsmap_t *lsmap_new(void) {
   lsmap_t* lsmap = (lsmap_t*)malloc(sizeof(lsmap_t));
   if (!lsmap) return NULL;
   lsmap->key = "dummy node";

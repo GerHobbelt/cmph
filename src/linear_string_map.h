@@ -5,7 +5,7 @@
 
 typedef struct __linear_string_map_t lsmap_t;
 
-lsmap_t *lsmap_new();
+lsmap_t *lsmap_new(void);
 void lsmap_append(lsmap_t *lsmap, const char *key, void *value);
 void* lsmap_search(lsmap_t *lsmap, const char *key);
 void lsmap_foreach_key(lsmap_t* lsmap, void (*f)(const char*));

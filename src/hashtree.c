@@ -17,7 +17,7 @@
 static int hashtree_gen_edges(cmph_config_t* mph);
 static void hashtree_traverse(hashtree_config_data_t* hashtree, cmph_uint8* visited, cmph_uint32 v);
 
-hashtree_config_data_t *hashtree_config_new()
+hashtree_config_data_t *hashtree_config_new(void)
 {
 	hashtree_config_data_t *hashtree;
 	hashtree = (hashtree_config_data_t *)malloc(sizeof(hashtree_config_data_t));
