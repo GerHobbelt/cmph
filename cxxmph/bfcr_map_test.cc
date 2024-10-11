@@ -75,7 +75,7 @@ int main(int argc, const char** argv) {
   fprintf(stderr, "Size is %lu\n", (unsigned long)h.size());
   for (int i = 0; i < num_valid; ++i) {
      char buf[10];    
-     snprintf(buf, 10, "%ld", i);
+     snprintf(buf, 10, "%d", i);
      h.erase(buf);
   }
   if (h.size() != 1) {
